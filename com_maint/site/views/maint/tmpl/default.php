@@ -54,14 +54,36 @@ defined('_JEXEC') or die('Restricted access');
             <div class="label"> الجهاز : </div>
             <div><?php echo $this->order->type ?></div>
         </div>
+
+        <?php if($this->order->serial): ?>
+        <div>
+            <div class="label">السيريال </div>
+            <div><?php echo $this->order->serial ?></div>
+        </div>
+        <?php endif; ?>
+
         <div>
             <div class="label"> الحالة : </div>
             <div><?php echo $this->order->stat ?></div>
         </div>
         <div>
-            <div class="label"> تاريخ استلام الطلب : </div>
+            <div class="label"> تاريخ الدخول : </div>
             <div> <?php echo $this->order->entered_at ?>
         </div>
-        <?php if($this->order->fixed_at): ?><div><div> تاريخ الإصلاح : </div> <div><?php echo $this->order->fixed_at ?></div></div><?php endif; ?>
+
+        <?php if($this->order->fixed_at): ?>
+        <div>
+          <div> تاريخ الإصلاح : </div>
+          <div><?php echo $this->order->fixed_at ?></div>
+        </div>
+        <?php endif; ?>
+
+        <?php if($this->order->delivered_at): ?>
+        <div>
+          <div> تاريخ خروجه : </div>
+          <div><?php echo $this->order->delivered_at ?></div>
+        </div>
+        <?php endif; ?>
+
     </div>
 <?php endif; ?>

@@ -49,6 +49,7 @@ CREATE TABLE `#__maint_orders` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `client_id` int(10) unsigned NOT NULL,
   `type` varchar(255) NOT NULL,
+  `serial` VARCHAR( 100 ) NULL ,
   `stat` text NOT NULL,
   `work_done` text,
   `total_money` int(11) NOT NULL DEFAULT '0',
@@ -57,6 +58,7 @@ CREATE TABLE `#__maint_orders` (
   `left_money` int(11) NOT NULL DEFAULT '0',
   `entered_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fixed_at` timestamp NULL DEFAULT NULL,
+  `delivered_at` TIMESTAMP NULL,
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `client_id` (`client_id`)
