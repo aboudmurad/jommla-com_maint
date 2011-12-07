@@ -18,7 +18,7 @@ class MaintViewMaint extends JView
 	{
 		// get the Data
 		$form = $this->get('Form');
-		$item = $this->get('Item');
+		$order = $this->get('Order');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
@@ -28,7 +28,7 @@ class MaintViewMaint extends JView
 		}
 		// Assign the Data
 		$this->form = $form;
-		$this->item = $item;
+		$this->order = $order;
 
 		// Set the toolbar
 		$this->addToolBar();
@@ -43,7 +43,7 @@ class MaintViewMaint extends JView
 	protected function addToolBar()
 	{
 		JRequest::setVar('hidemainmenu', true);
-		$isNew = ($this->item->id == 0);
+		$isNew = (false==isset($this->item) || $this->item->id == 0);
 		JToolBarHelper::title($isNew ? 'جديد'
 		                             : 'تغيير');
 		JToolBarHelper::save('maint.save');

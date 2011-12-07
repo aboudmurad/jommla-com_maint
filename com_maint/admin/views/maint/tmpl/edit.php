@@ -3,10 +3,12 @@
 defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.tooltip');
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_maint&layout=edit&id='.(int) $this->item->id); ?>"
+<form action="<?php echo JRoute::_('index.php?option=com_maint&layout=edit&id='.(int) $this->order->id); ?>"
       method="post" name="adminForm" id="maint-form">
 	<fieldset class="adminform">
-		<legend> تغيير طلب صيانة </legend>
+		<?php if ($this->order->id): ?><legend> تغيير طلب صيانة </legend><?php else: ?>
+    <legend> إضافة طلب صيانة </legend>
+    <?php endif?>
 		<ul class="adminformlist">
 <?php foreach($this->form->getFieldset() as $field): ?>
 			<li><?php echo $field->label;echo $field->input;?></li>

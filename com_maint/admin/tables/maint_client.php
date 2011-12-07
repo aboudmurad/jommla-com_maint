@@ -8,7 +8,7 @@ jimport('joomla.database.table');
 /**
  * Hello Table class
  */
-class MaintTableClient extends JTable
+class MaintTableMaint_client extends JTable
 {
 	/**
 	 * Constructor

@@ -7,7 +7,7 @@ defined('_JEXEC') or die('Restricted Access');
 		الرقم
 	</th>
 	<th width="20">
-		<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count($this->items); ?>);" />
+<!--		<input type="radio" name="toggle" value="" onclick="checkAll(<?php echo count($this->items); ?>);" />-->
 	</th>
 
     <th>

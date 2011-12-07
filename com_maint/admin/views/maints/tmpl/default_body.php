@@ -2,13 +2,13 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
 ?>
-<?php foreach($this->items as $i => $item): ?>
+<?php foreach($this->items as $i => $item): //var_dump($item);?>
 	<tr class="row<?php echo $i % 2; ?>">
 		<td>
 			<?php echo $item->id; ?>
 		</td>
 		<td>
-			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
+          <input onclick="isChecked(this.checked);" type="radio" id="cb<?php echo $i ?>" name="cid[]" value="<?php echo $item->id ?>" title="Checkbox for row <?php echo $i ?>">
 		</td>
 		<td>
 			<?php echo $item->name; ?>

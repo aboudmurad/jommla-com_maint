@@ -16,6 +16,7 @@ class MaintControllerMaints extends JControllerAdmin
 	 */
 	public function getModel($name = 'Maint', $prefix = 'MaintModel')
 	{
+
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;
 	}

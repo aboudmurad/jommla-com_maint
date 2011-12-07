@@ -15,7 +15,7 @@ class MaintViewMaints extends JView
 	{
 		// Get data from the model
 		$items = $this->get('Orders');
-		$pagination = $this->get('Pagination');
+		//$pagination = $this->get('Pagination');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
@@ -25,27 +25,41 @@ class MaintViewMaints extends JView
 		}
 		// Assign data to the view
 		$this->items = $items;
-		$this->pagination = $pagination;
+		//$this->pagination = $pagination;
 
         // Set the toolbar
 		$this->addToolBar();
 
 		// Display the template
 		parent::display($tpl);
+
+    // Set the document
+		$this->setDocument();
 	}
 
   /**
-	 * Setting the toolbar
+   * Setting the toolbar
+   */
+  protected function addToolBar() {
+    JToolBarHelper::title('ورشة الصيانة');
+
+    JToolBarHelper::custom('maint.search', 'icon-32-search.png', '', 'بحث', false, false);
+    JToolBarHelper::custom('maint.report', 'icon-32-xml.png', '', 'التقارير', false, false);
+
+    JToolBarHelper::deleteListX('', 'maints.delete');
+    JToolBarHelper::editListX('maint.edit');
+    JToolBarHelper::addNewX('maint.add');
+  }
+
+
+  /**
+	 * Method to set up the document properties
+	 *
+	 * @return void
 	 */
-	protected function addToolBar()
+	protected function setDocument()
 	{
-		JToolBarHelper::title('ورشة الصيانة');
-
-    JToolBarHelper::custom( 'maint.search', 'icon-32-search.png', '', 'بحث', false, false );
-    JToolBarHelper::custom( 'maint.report', 'icon-32-xml.png', '', 'التقارير', false, false );
-
-		JToolBarHelper::deleteList('', 'maints.delete');
-		JToolBarHelper::editList('maint.edit');
-		JToolBarHelper::addNew('maint.add');
+		$document = JFactory::getDocument();
+		$document->setTitle('إدارة ورشة صيانة الحواسيب');
 	}
 }

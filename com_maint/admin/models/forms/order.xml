@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addrulepath="/administrator/components/com_maint/models/rules"
+      addfieldpath="/administrator/components/com_maint/models/fields">
+<fieldset>
+		<field name="id"	type="hidden"	/>
+		<field name="type" type="text" size="40"	class="inputbox" default=""  required="true"
+			label="الجهاز"
+      description="نوع الجهاز المطلوب صيانته"	/>
+
+    <field name="serial" type="text" size="40"	class="inputbox" default=""  required="true"
+			label="سريال"
+      description="سيريال الجهاز"	/>
+
+    <field name="stat" type="text" size="40"	class="inputbox" default=""  required="true"
+			label="الحالة"
+      description="وصف للحالة التي عليها الجهاز او للعطل"	/>
+
+    <field name="work_done" type="textarea" size="40"	class="inputbox" default=""
+			label="العمل"
+      description="العمل اللذي تم عمله لإصلاح العطل"	/>
+
+    <field name="total_money" type="text" size="5"	default=""  required="true" validate="integer"
+			label="المبلغ الكلّي"
+      description="التكلفة الكلية"	/>
+
+    <field name="discount_money" type="text" size="5"	default="0" validate="calc"
+			label="المبلغ المٌخفّض"
+      description="المبلغ المٌخفّض"	/>
+
+    <field name="paied_money" type="text" size="5"	default="0" validate="calc"
+			label="المبلغ المدفٌوع"
+      description="المبلغ اللذي قام العميل بدفعه"	/>
+
+    <field name="entered_at" type="EhCalendar" time="true" locale="ar-AA" required="true"
+			label="تاريخ الدخول "
+      description="تاريخ استلام الجهاز من العميل"	/>
+
+    <field name="fixed_at" type="EhCalendar" time="true" locale="ar-AA" validate="datum"
+			label="تاريخ الإصلاح "
+      description="تاريخ اصلاح العٌطل"	/>
+
+    <field name="delivered_at" type="EhCalendar" time="true" locale="ar-AA" validate="datum"
+			label="تاريخ الإستلام"
+      description="تاريخ استلام العميل للجهاز مرة اخري"	/>
+
+    <field type="spacer" name="myspacer" hr="true" />
+    
+    <field name="user_id"	type="hidden" value="0"	/>
+    <field name="user_name" type="text" size="40"	class="inputbox" default=""  required="true"
+			label="إسم العميل"
+      description="إسم العميل صاحب الجهاز"	/>
+
+    <field name="user_phone" type="text" size="40"	class="inputbox" default=""  validate="integer"   required="true"
+			label="الهاتف"
+      description="هاتف العميل للاتصال به في حالة دعت الحاجه الي ذلك"	/>
+
+    <field name="user_email" type="text" size="40"	class="inputbox" default=""  validate="email"
+			label="البريد الإلكتروني"
+      description="البريد الالكتروني للعميل كوسيلة للاتصال به"	/>
+
+</fieldset>
+</form>

@@ -1,4 +1,5 @@
 <?php
+
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
@@ -8,6 +9,24 @@ jimport('joomla.application.component.controllerform');
 /**
  * HelloWorld Controller
  */
-class MaintControllerMaint extends JControllerForm
-{
+class MaintControllerMaint extends JControllerForm {
+
+  public function search() {
+    //$this->addToolBar();
+    
+    //return true;
+  }
+
+  /**
+   * Setting the toolbar
+   */
+  protected function addToolBar() {
+    JToolBarHelper::title('ورشة الصيانة');
+
+    JToolBarHelper::custom('maint.search', 'icon-32-search.png', '', 'بحث', false, false);
+    JToolBarHelper::custom('maint.report', 'icon-32-xml.png', '', 'التقارير', false, false);
+
+    JToolBarHelper::addNewX('maint.add');
+  }
+
 }

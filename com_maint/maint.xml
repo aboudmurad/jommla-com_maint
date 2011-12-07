@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="1.6.0" method="upgrade">
 
-	<name>Maint</name>
+	<name>COM_MAINT</name>
 	<!-- The following elements are optional and free of formatting constraints -->
 	<creationDate>06 November 2011</creationDate>
 	<author>Ahmed M. Araby</author>
@@ -12,7 +12,7 @@
 	<!--  The version string is recorded in the components table -->
 	<version>0.1</version>
 	<!-- The description is optional and defaults to the name -->
-	<description>إدارة ورشة الصيانة.</description>
+	<description>COM_MAINT_DESCRIPTION</description>
 
 	<install> <!-- Runs on install -->
 		<sql>
@@ -35,12 +35,12 @@
 		<filename>controller.php</filename>
 
 		<folder>views</folder>
-        <folder>models</folder>
+    <folder>models</folder>
 	</files>
 
 	<administration>
 		<!-- Administration Menu Section -->
-		<menu>Maint</menu>
+		<menu>COM_MAINT_MENU</menu>
 		<!-- Administration Main File Copy Section -->
 		<!-- Note the folder attribute: This attribute describes the folder
 			to copy FROM in the package to install therefore files copied
@@ -53,10 +53,16 @@
 
             <folder>views</folder>
             <folder>assets</folder>
-			<folder>sql</folder>
+            <folder>sql</folder>
             <folder>tables</folder>
             <folder>models</folder>
 		</files>
+
+    <languages folder="admin">
+			<!--<language tag="en-GB">language/en-GB/en-GB.com_maint.ini</language>-->
+			<language tag="en-GB">language/en-GB/en-GB.com_maint.sys.ini</language>
+      <language tag="ar-AA">language/ar-AA/ar-AA.com_maint.sys.ini</language>
+		</languages>
 	</administration>
 
 </extension>
