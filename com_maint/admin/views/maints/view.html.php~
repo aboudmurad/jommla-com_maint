@@ -46,7 +46,7 @@ class MaintViewMaints extends JView
     JToolBarHelper::custom('maints.search', 'icon-32-search.png', '', 'بحث', false, false);
     JToolBarHelper::custom('maints.report', 'icon-32-xml.png', '', 'التقارير', false, false);
 
-    JToolBarHelper::deleteListX('', 'maints.delete');
+    JToolBarHelper::deleteListX('', 'maint.delete');
     JToolBarHelper::editListX('maint.edit');
     JToolBarHelper::addNewX('maint.add');
   }
