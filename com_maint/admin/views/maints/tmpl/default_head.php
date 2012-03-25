@@ -11,22 +11,23 @@ defined('_JEXEC') or die('Restricted Access');
 	</th>
 
     <th>
-			الإسم
+			إسم العميل
 		</th>
 		<th>
 			الهاتف
+		</th>
+        		<th>
+			خلوي
 		</th>
 		<th>
 			بريد الكتروني
 		</th>
     <th>
-			الجهاز
+			نوع الجهاز
 		</th>
+        
     <th>
-			الحالة
-		</th>
-    <th>
-			سريال
+			تم العمل
 		</th>
 		<th>
 			مبلغ كلي
@@ -42,10 +43,6 @@ defined('_JEXEC') or die('Restricted Access');
 		</th>
 		<th>
 			تاريخ دخول
-		</th>
-
-    <th>
-			العمل
 		</th>
 
 		<th>

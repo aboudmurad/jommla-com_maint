@@ -13,9 +13,12 @@ class MaintViewMaints extends JView
 	// Overwriting JView display method
 	function display($tpl = null)
 	{
+		$this->pagination	= $this->get('Pagination');
+		$this->state		= $this->get('State');
+	
+	
 		// Get data from the model
 		$items = $this->get('Orders');
-		//$pagination = $this->get('Pagination');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
@@ -43,8 +46,7 @@ class MaintViewMaints extends JView
   protected function addToolBar() {
     JToolBarHelper::title('ورشة الصيانة');
 
-    JToolBarHelper::custom('maints.search', 'icon-32-search.png', '', 'بحث', false, false);
-    JToolBarHelper::custom('maints.report', 'icon-32-xml.png', '', 'التقارير', false, false);
+    JToolBarHelper::custom('maints.reports', 'icon-32-xml.png', '', 'التقارير', false, false);
 
     JToolBarHelper::deleteListX('', 'maints.delete');
     JToolBarHelper::editListX('maint.edit');

@@ -16,17 +16,17 @@ defined('_JEXEC') or die('Restricted Access');
 		<td>
 			<?php echo $item->phone; ?>
 		</td>
+        		<td>
+			<?php echo $item->mobile; ?>
+		</td>
 		<td>
 			<?php echo $item->email; ?>
 		</td>
     <td>
-			<?php echo $item->type; ?>
+			<?php echo $item->device_type; ?>
 		</td>
     <td>
-			<?php echo $item->stat; ?>
-		</td>
-    <td>
-			<?php echo $item->serial; ?>
+			<span class="fixed_<?php echo $item->fixed; ?>"></span>
 		</td>
 		<td>
 			<?php echo $item->total_money; ?>
@@ -37,17 +37,12 @@ defined('_JEXEC') or die('Restricted Access');
 		<td>
 			<?php echo $item->paied_money; ?>
 		</td>
-		<td>
+		<td <?php if($item->left_money):?>class="remainder_yellow"<?php endif; ?>>
 			<?php echo $item->left_money; ?>
 		</td>
 		<td>
 			<?php echo $item->entered_at; ?>
 		</td>
-
-    <td>
-			<?php echo $item->work_done; ?>
-		</td>
-
 		<td>
 			<?php echo $item->fixed_at; ?>
 		</td>

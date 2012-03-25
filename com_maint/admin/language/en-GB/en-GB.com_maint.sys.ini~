@@ -1,4 +1,6 @@
 COM_MAINT="Maintanance workshop"
 COM_MAINT_DESCRIPTION="Manage computer maintainance workshop."
 COM_MAINT_MENU="Maintanance workshop"
-COM_MAINT_MENU_MANAGE=""
+COM_MAINT_MENU_MANAGE="Manage"
+COM_MAINT_MENU_NEW="New"
+COM_MAINT_N_ITEMS_DELETED="Deleted."

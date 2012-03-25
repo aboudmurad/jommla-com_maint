@@ -5,3 +5,15 @@
 .icon-32-icon-32-xml {
   background-image: url("../images/icon-32-xml.png");
 }
+
+.fixed_0 {
+     background-image: url("../images/publish_r.png");
+}
+
+.fixed_1 {
+     background-image: url("../images/tick.png");
+}
+
+.remainder_yellow {
+    background-color: #fbcb09 ;
+}

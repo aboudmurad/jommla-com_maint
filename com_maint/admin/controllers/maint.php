@@ -11,12 +11,6 @@ jimport('joomla.application.component.controllerform');
  */
 class MaintControllerMaint extends JControllerForm {
 
-  public function search() {
-    //$this->addToolBar();
-    
-    //return true;
-  }
-
   /**
    * Setting the toolbar
    */
