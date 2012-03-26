@@ -15,10 +15,6 @@ class MaintViewMaints extends JView
 	{
 		$this->pagination	= $this->get('Pagination');
 		$this->state		= $this->get('State');
-	
-	
-		// Get data from the model
-		$items = $this->get('Orders');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
@@ -27,7 +23,7 @@ class MaintViewMaints extends JView
 			return false;
 		}
 		// Assign data to the view
-		$this->items = $items;
+		$this->items = $this->get('Items');
 		//$this->pagination = $pagination;
 
         // Set the toolbar

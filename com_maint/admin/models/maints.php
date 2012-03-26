@@ -11,89 +11,197 @@ jimport('joomla.application.component.modellist');
  */
 class MaintModelMaints extends JModelList {
 
-  /**
-   * @var string msg
-   */
-  protected $order;
+    /**
+     * @var string msg
+     */
+    protected $order;
 
-  /**
-   * Get Array of orders
-   * @return array
-   */
-   
+    /**
+     * Constructor.
+     *
+     * @param	array	An optional associative array of configuration settings.
+     * @see		JController
+     * @since	1.6
+     */
+    public function __construct($config = array()) {
+        if (empty($config['filter_fields'])) {
+            $config['filter_fields'] = array(
+                'o.id',
+                'c.name',
+                'c.phone ',
+                'c.mobile',
+                'c.email',
+                'o.device_type',
+                'o.fixed',
+                'o.discount_money',
+                'o.total_money',
+                'o.paied_money',
+                'o.left_money',
+                'o.entered_at',
+                'o.fixed_at',
+                'o.delivered_at'
+            );
+        }
+
+        parent::__construct($config);
+    }
+
+    /**
+     * Build an SQL query to load the list data.
+     *
+     * @return	JDatabaseQuery
+     * @since	1.6
+     */
+    protected function getListQuery() {
+        // Create a new query object.
+        $db = $this->getDbo();
+        $query = $db->getQuery(true);
+
+        // Select the required fields from the table.
+        $query->select('o.*');
+        $query->from('#__maint_orders AS o');
+
+        // Join over the Clients
+        $query->select('c.name, c.email, c.phone, c.mobile, c.id as client_id');
+        $query->join('LEFT', '`#__maint_clients` AS c ON c.id = o.client_id');
+
+        // Join over the users for user name
+        $query->select('ux.name AS workers_recipient');
+        $query->join('LEFT', '#__users AS ux ON ux.id=o.workers_recipient_id ');
+
+        // Join over the users for the checked out user.
+        $query->select('u.name AS workers_fixer');
+        $query->join('LEFT', '#__users AS u ON u.id=o.workers_fixer_id  ');
+
+        $fixed = $this->getState('filter.fixed');
+        if (is_numeric($fixed) && ($fixed == 1 || $fixed == 0)) {
+            $fixed = (int) $fixed;
+            $query->where('o.fixed = "' . $fixed . '"');
+        }
+
+        $left_money = $this->getState('filter.left_money');
+        if (is_numeric($left_money) && ($left_money == 1 || $left_money == 0)) {
+            if ($left_money == 0) {
+                $query->where('o.left_money = 0');
+            } else {
+                $query->where('o.left_money > 0');
+            }
+        }
+
+        $delivered = $this->getState('filter.delivered');
+        if (is_numeric($delivered) && ($delivered == 1 || $delivered == 0)) {
+            if ($delivered == 0) {
+                $query->where('o.delivered_at = 0');
+            } else {
+                $query->where('o.delivered_at > 0');
+            }
+        }
+
+        $clientId = $this->getState('filter.clientId');
+        if ($clientId) {
+            $clientId = (int) $clientId;
+            $query->where('o.client_id = "' . $clientId . '"');
+        }
+        
+        $deviceType = $this->getState('filter.deviceType');
+        if ($deviceType) {
+            $deviceType = $db->getEscaped( $deviceType );
+            $query->where('o.device_type = "' . $deviceType . '"');
+        }
 
 
-	/**
-	 * Constructor.
-	 *
-	 * @param	array	An optional associative array of configuration settings.
-	 * @see		JController
-	 * @since	1.6
-	 */
-	public function __construct($config = array())
-	{
-		if (empty($config['filter_fields'])) {
-			$config['filter_fields'] = array(
-				'id', 'id',
-				'type', 'type',
-				'entered_at ', 'entered_at '
-			);
-		}
+        // Filter by search in title.
+        $search = $this->getState('filter.search');
+        if (!empty($search)) {
+            if (is_numeric($search)) {
+                $search = (int) $search;
+                $query->where('(o.id =' . $search . '   
+                                OR o.phone = "' . $search . '"
+                                OR o.mobile = "' . $search . '" )');
+            } else {
+                $search = $db->Quote('%' . $db->getEscaped($search, true) . '%');
+                $query->where('(c.name LIKE ' . $search . '
+                             OR u.name LIKE ' . $search . '
+                             OR ux.name LIKE ' . $search . '
+                             OR c.email LIKE ' . $search . '
+                             OR o.device_type  LIKE ' . $search . '
+                             OR o.device_desc LIKE ' . $search . '
+                             OR o.work_required LIKE ' . $search . '
+                                 )');
+            }
+        }
 
-		parent::__construct($config);
-	}
 
-	/**
-	 * Method to auto-populate the model state.
-	 *
-	 * Note. Calling getState in this method will result in recursion.
-	 *
-	 * @return	void
-	 * @since	1.6
-	 */
-	protected function populateState($ordering = null, $direction = null)
-	{
-		// Initialise variables.
-		$app = JFactory::getApplication();
-		$session = JFactory::getSession();
+        // Add the list ordering clause.
+        $orderCol = $this->state->get('list.ordering');
+        $orderDirn = $this->state->get('list.direction');
+        $query->order($db->getEscaped($orderCol . ' ' . $orderDirn));
 
-		// Adjust the context to support modal layouts.
-		if ($layout = JRequest::getVar('layout')) {
-			$this->context .= '.'.$layout;
-		}
+        // echo nl2br(str_replace('#__','jos_',$query));
+        return $query;
+    }
 
-		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
-		$this->setState('filter.search', $search);
+    /**
+     * Method to auto-populate the model state.
+     *
+     * Note. Calling getState in this method will result in recursion.
+     *
+     * @return	void
+     * @since	1.6
+     */
+    protected function populateState($ordering = null, $direction = null) {
+        // Adjust the context to support modal layouts.
+        if (($layout = JRequest::getVar('layout'))) {
+            $this->context .= '.' . $layout;
+        }
+        //Clients for the form
+        $this->setState('clientIdsList', $this->getClientList());
 
-		$access = $this->getUserStateFromRequest($this->context.'.filter.access', 'filter_access', 0, 'int');
-		$this->setState('filter.access', $access);
+        //Device Types for the form
+        $this->setState('deviceTypesList', $this->getDevicesList());
 
-		$authorId = $app->getUserStateFromRequest($this->context.'.filter.author_id', 'filter_author_id');
-		$this->setState('filter.author_id', $authorId);
+        //Filter population
+        $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+        $this->setState('filter.search', $search);
 
-		$published = $this->getUserStateFromRequest($this->context.'.filter.published', 'filter_published', '');
-		$this->setState('filter.published', $published);
+        $fixed = $this->getUserStateFromRequest($this->context . '.filter.fixed', 'filter_fixed');
+        $this->setState('filter.fixed', $fixed);
 
-		$categoryId = $this->getUserStateFromRequest($this->context.'.filter.category_id', 'filter_category_id');
-		$this->setState('filter.category_id', $categoryId);
+        $left_money = $this->getUserStateFromRequest($this->context . '.filter.left_money', 'filter_left_money');
+        $this->setState('filter.left_money', $left_money);
 
-		$language = $this->getUserStateFromRequest($this->context.'.filter.language', 'filter_language', '');
-		$this->setState('filter.language', $language);
+        $delivered = $this->getUserStateFromRequest($this->context . '.filter.delivered', 'filter_delivered');
+        $this->setState('filter.delivered', $delivered);
 
-		// List state information.
-		parent::populateState('a.title', 'asc');
-	}
-   
-  public function getOrders() {
-    // Create a new query object.
-    $db = JFactory::getDBO();
-    $db->setQuery(
-            'SELECT o.*, c.*' .
-            ' FROM #__maint_orders AS o' .
-            ' LEFT JOIN #__maint_clients AS c' .
-            ' ON c.id = o.client_id'
-    );
-    return $db->loadObjectList();
-  }
+        $deviceType = $this->getUserStateFromRequest($this->context . '.filter.deviceType', 'filter_deviceType');
+        $this->setState('filter.deviceType', $deviceType);
+
+        $clientId = $this->getUserStateFromRequest($this->context . '.filter.clientId', 'filter_clientId');
+        $this->setState('filter.clientId', $clientId);
+
+        // List state information.
+        parent::populateState('o.id', 'desc');
+    }
+
+    public function getOrders() {
+        // Create a new query object.
+        $db = JFactory::getDBO();
+        $db->setQuery($this->getListQuery());
+        return $db->loadObjectList();
+    }
+
+    public function getClientList() {
+        // Create a new query object.
+        $db = JFactory::getDBO();
+        $db->setQuery('SELECT `id`, `name` from `#__maint_clients`');
+        return $db->loadAssocList('id', 'name');
+    }
+
+    public function getDevicesList() {
+        // Create a new query object.
+        $db = JFactory::getDBO();
+        $db->setQuery('SELECT DISTINCT `device_type` from `#__maint_orders`');
+        return $db->loadAssocList('device_type', 'device_type');
+    }
 
 }

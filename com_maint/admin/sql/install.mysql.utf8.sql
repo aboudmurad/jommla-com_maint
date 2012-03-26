@@ -70,15 +70,14 @@ CREATE TABLE `#__maint_orders` (
   `fixed_at` timestamp NULL DEFAULT NULL,
   `delivered_at` TIMESTAMP NULL,
   PRIMARY KEY (`id`),
-  KEY `type` (`type`),
+  KEY `device_type` (`device_type`),
   KEY `client_id` (`client_id`),
-  KEY `fixer_id` (`fixer_id`)
+  KEY `fixed` (`fixed`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `ly9lb_orders`
 --
 
----INSERT INTO `#__maint_orders` (`id`, `client_id`, `type`, `stat`, `work_done`, `total_money`, `discount_money`, `paied_money`, `left_money`, `entered_at`) VALUES
----
----
+INSERT INTO `#__maint_orders` (`client_id`,`workers_recipient_id` , `device_type`, `device_desc`, `work_required`, `total_money`, `discount_money`, `paied_money`, `left_money`) VALUES
+    (1, 1, 'HardDisk', 'Western Digital', 'Fix Media', 120, 20, 50, 50);

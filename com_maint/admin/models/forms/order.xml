@@ -4,20 +4,20 @@
 <fieldset>
     
     
-        <field name="user_id"	type="hidden" value="0"	/>
-    <field name="user_name" type="text" size="40"	class="inputbox" default=""  required="true"
+        <field name="client_id"	type="hidden" value="0"	/>
+    <field name="client_name" type="text" size="40"	class="inputbox" default=""  required="true"
 			label="إسم العميل"
       description="إسم العميل صاحب الجهاز"	/>
 
-    <field name="user_phone" type="text" size="40"	class="inputbox" default=""  validate="integer"   required="true"
+    <field name="client_phone" type="text" size="40"	class="inputbox" default=""  validate="integer"   required="true"
 			label="الهاتف"
       description="هاتف العميل للاتصال به في حالة دعت الحاجه الي ذلك"	/>
       
-    <field name="user_mobile" type="text" size="40"	class="inputbox" default=""  validate="integer"   required="true"
+    <field name="client_mobile" type="text" size="40"	class="inputbox" default=""  validate="integer"   required="true"
 			label="خلوي"
       description="هاتف العميل للاتصال به في حالة دعت الحاجه الي ذلك"	/>
 
-    <field name="user_email" type="text" size="40"	class="inputbox" default=""  validate="email"
+    <field name="client_email" type="text" size="40"	class="inputbox" default=""  validate="email"
 			label="البريد الإلكتروني"
       description="البريد الالكتروني للعميل كوسيلة للاتصال به"	/>
       
@@ -36,13 +36,6 @@
     <field name="work_required" type="textarea"	class="inputbox" default=""  required="true"
 			label="المطلوب او المشكلة"
       description="وصف للمشكلة او المطلوب عمله"	/>
-
-    <field name="fixed" type="list"	class="inputbox" default=""
-			label="انتهاء العل المطلوب"
-      description="تمّ العمل المطلوب">
-            <option value="0">لا</option>
-            <option value="1">نعم</option>
-    </field>
 
     <field name="work_done" type="textarea"	class="inputbox" default=""
 			label="العمل"
@@ -69,7 +62,7 @@
       description="تاريخ اصلاح العٌطل"	/>
 
     <field name="delivered_at" type="EhCalendar" time="true" locale="ar-AA" validate="datum"
-			label="تاريخ الإستلام"
+			label="تاريخ الخروج"
       description="تاريخ استلام العميل للجهاز مرة اخري"	/>
 
 </fieldset>

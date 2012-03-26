@@ -8,12 +8,26 @@
 
 .fixed_0 {
      background-image: url("../images/publish_r.png");
+             display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+
+table.adminlist tr td{
+      text-align: center;
 }
 
 .fixed_1 {
      background-image: url("../images/tick.png");
+        display: inline-block;
+    height: 16px;
+    width: 16px;
 }
 
-.remainder_yellow {
+table.adminlist tbody tr td.yellow {
     background-color: #fbcb09 ;
+}
+
+table.adminlist tbody tr td.green {
+    background-color: #c6d880 ;
 }

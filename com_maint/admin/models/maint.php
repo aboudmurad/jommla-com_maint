@@ -37,74 +37,78 @@ class MaintModelMaint extends JModelAdmin {
      * @return	boolean	True on success.
      */
     public function save($data) {
+ 
         //make entries
-        $orderObj  = $this->getTable();
+        $orderObj = $this->getTable();
         $clientObj = $this->getTable('client');
 
         $this->mergeClientData($data, $clientObj);
         $clientObj->store();
 
         $this->mergeOrderData($data, $orderObj, $clientObj);
+
         $orderObj->store();
         return true;
     }
 
     private function mergeOrderData($data, $orderObj, $clientObj) {
-        $currentLoggedUser = & JFactory::getUser();
+       	$currentLoggedUser =& JFactory::getUser();
+        $orderObj->load($data['id']);
         
-        if ($data['id'] && false==($orderObj = $this->getTable()->load($data['id']))) {
-            $orderObj = $this->getTable('client');
-            
-            //if this is new entry, link current logged in user to the workers_recipient_id
-            $orderObj['workers_recipient_id'] = $currentLoggedUser->id;
-        }
-        
-        $leftMoney = $data['total_money'] - ( $data['paied_money'] + $data['discount_money'] );
-        $order = array(
-            'device_type'   => $data['device_type'],
-            'device_desc'   => $data['device_desc'],
-            'work_required' => $data['work_required'],
-            'entered_at'  => $data['entered_at'],
-            'fixed'       => $data['fixed'],
-            'work_done'   => $data['work_done'],
-            'total_money' => $data['total_money'],
-            'discount_money' => $data['discount_money'],
-            'paied_money'    => $data['paied_money'],
-            'left_money'     => $leftMoney,
-            'fixed_at'       => $data['fixed_at'],
-            'delivered_at'   => $data['delivered_at'],
-            'client_id'      => $clientObj->id
-        );
-        
-        if ($data['fixed']) {
-            $order['workers_fixer_id'] = $currentLoggedUser->id;
+        if (!$orderObj->workers_recipient_id)
+        {
+            $order['workers_recipient_id'] = $currentLoggedUser->id;
         }
 
-        $orderObj->bind($order);
+        $leftMoney = $data['total_money'] - ( $data['paied_money'] + $data['discount_money'] );
+        $order = array(
+            'device_type' => $data['device_type'],
+            'device_desc' => $data['device_desc'],
+            'work_required' => $data['work_required'],
+            'entered_at' => $data['entered_at'],
+            'work_done' => $data['work_done'],
+            'total_money' => $data['total_money'],
+            'discount_money' => $data['discount_money'],
+            'paied_money' => $data['paied_money'],
+            'left_money' => $leftMoney,
+            'fixed_at' => $data['fixed_at'],
+            'delivered_at' => $data['delivered_at'],
+            'client_id' => $clientObj->id
+        );
+       
+        if (strtotime($data['fixed_at'])) { 
+            $order['fixed'] = 1;
+            $order['workers_fixer_id'] = $currentLoggedUser->id;
+        }else {
+            $order['fixed'] = 0;
+        }
+        
+
+        $orderObj->bind($order);       
     }
 
     private function mergeClientData($data, $clientObj) {
         //check if the user email or phone exists
         $oldClient = false;
         if (($oldClient = $this->getClientById($data['client_id'])) ||
-                ($oldClient = $this->getClientByPhone($data['user_phone'])) ||
-                ($oldClient = $this->getClientByMobile($data['user_mobile'])) ||
-                ($oldClient = $this->getClientByEmail($data['user_email']) )) {
+                ($oldClient = $this->getClientByPhone($data['client_phone'])) ||
+                ($oldClient = $this->getClientByMobile($data['client_mobile'])) ||
+                ($oldClient = $this->getClientByEmail($data['client_email']) )) {
 
             $clientObj->bind($oldClient);
-            $clientObj->name = $data['user_name'];
-            $clientObj->phone = $data['user_phone'];
-            $clientObj->mobile = $data['user_mobile'];
+            $clientObj->name = $data['client_name'];
+            $clientObj->phone = $data['client_phone'];
+            $clientObj->mobile = $data['client_mobile'];
 
-            if (!$clientObj->email && isset($data['user_email']) && $data['user_email']) {
-                $clientObj->email = $data['user_email'];
+            if (!$clientObj->email && isset($data['client_email']) && $data['client_email']) {
+                $clientObj->email = $data['client_email'];
             }
         } else {
             $clientData = array(
-                'name' => $data['user_name'],
-                'phone' => $data['user_phone'],
-                'mobile' => $data['user_mobile'],
-                'email' => $data['user_email']
+                'name' => $data['client_name'],
+                'phone' => $data['client_phone'],
+                'mobile' => $data['client_mobile'],
+                'email' => $data['client_email']
             );
             $clientObj->bind($clientData);
         }
@@ -182,10 +186,35 @@ class MaintModelMaint extends JModelAdmin {
      * @return string The message to be displayed to the user
      */
     public function getOrder() {
-        if (!isset($this->order)) {
-            $id = JRequest::getInt('id');
-            $this->order = $this->getTable()->load($id);
-        }
+        if ($this->order)
+            return $this->order;
+        
+        $id = JRequest::getInt('id');
+
+        // Create a new query object.
+        $db = $this->getDbo();
+        $query = $db->getQuery(true);
+
+        // Select the required fields from the table.
+        $query->select('o.*');
+        $query->from('#__maint_orders AS o');
+
+        // Join over the Clients
+        $query->select('c.name, c.email, c.phone, c.mobile, c.id as client_id');
+        $query->join('LEFT', '`#__maint_clients` AS c ON c.id = o.client_id');
+
+        // Join over the users for user name
+        $query->select('ux.name AS workers_recipient');
+        $query->join('LEFT', '#__users AS ux ON ux.id=o.workers_recipient_id ');
+
+        // Join over the users for the checked out user.
+        $query->select('u.name AS workers_fixer');
+        $query->join('LEFT', '#__users AS u ON u.id=o.workers_fixer_id  ');
+
+        $query->where('o.id =' . $id);
+
+        $db->setQuery($query);
+        $this->order = $db->loadObject();
         return $this->order;
     }
 
@@ -216,16 +245,23 @@ class MaintModelMaint extends JModelAdmin {
         // Check the session for previously entered form data.
         $data = JFactory::getApplication()->getUserState('com_maint.edit.maint.data', array());
         if (empty($data) && ($id = (int) JRequest::getInt('id'))) {
-            $db = $this->getDbo();
+            /*$db = $this->getDbo();
             $db->setQuery(
-                    'SELECT o.*, c.id AS user_id, c.name AS user_name, c.phone AS user_phone, c.email AS user_email' .
+                    'SELECT o.*, c.id AS client_id, c.name AS client_name, c.phone AS client_phone, c.mobile AS client_mobile, c.email AS client_email' .
                     ' FROM #__maint_orders AS o' .
                     ' LEFT JOIN #__maint_clients AS c' .
                     ' ON c.id = o.client_id' .
                     ' WHERE o.id = ' . $id
             );
 
-            $data = $db->loadObject();
+            $this->order = $db->loadObject();*/
+            if (!$this->order)
+                $this->order = $this->getOrder();
+            $data = $this->order;
+            $data->client_name  = $data->name;
+            $data->client_phone = $data->phone;
+            $data->client_mobile = $data->mobile;
+            $data->client_email  = $data->email;
         }
         return $data;
     }
