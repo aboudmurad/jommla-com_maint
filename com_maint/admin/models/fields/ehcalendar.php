@@ -35,11 +35,15 @@ class JFormFieldEhCalendar extends JFormField {
 			});
 		});
 		");
+        
+        if (!$this->value && $this->element['addDefault']) {
+            $this->value = date("Y-m-d H:i:s");
+        }
 
 		// add css
 		$doc->addStyleSheet(JURI::base(true)  . '/components/com_maint/assets/css/datepicker/datepicker_dashboard/datepicker_dashboard.css');
 
-		$input ='<input type="text" name="'.$this->name . '" id="'.$this->id.'" class="'.$class.'" required="'.$this->required.'" />';
+		$input ='<input type="text" name="'.$this->name . '" value="'.$this->value.'" id="'.$this->id.'" class="'.$class.'" required="'.$this->required.'" />';
 
 		return $input;
 	}

@@ -10,6 +10,10 @@ jimport('joomla.application.component.controlleradmin');
  */
 class MaintControllerMaints extends JControllerAdmin
 {
+    public function reports() {
+        $this->setRedirect(JRoute::_('index.php?option='.$this->option.'&view=reports', false));
+    }
+    
 	/**
 	 * Proxy for getModel.
 	 * @since	1.6

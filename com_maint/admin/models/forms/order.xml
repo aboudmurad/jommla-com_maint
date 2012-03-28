@@ -53,7 +53,7 @@
 			label="المبلغ المدفٌوع"
       description="المبلغ اللذي قام العميل بدفعه"	/>
 
-    <field name="entered_at" type="EhCalendar" time="true" locale="ar-AA" required="true"
+    <field name="entered_at" type="EhCalendar" time="true" locale="ar-AA" required="true" addDefault="true"
 			label="تاريخ الدخول "
       description="تاريخ استلام الجهاز من العميل"	/>
 

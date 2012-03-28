@@ -17,9 +17,7 @@ class MaintControllerMaint extends JControllerForm {
   protected function addToolBar() {
     JToolBarHelper::title('ورشة الصيانة');
 
-    JToolBarHelper::custom('maint.search', 'icon-32-search.png', '', 'بحث', false, false);
     JToolBarHelper::custom('maint.report', 'icon-32-xml.png', '', 'التقارير', false, false);
-
     JToolBarHelper::addNewX('maint.add');
   }
 
