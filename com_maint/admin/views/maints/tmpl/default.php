@@ -19,34 +19,48 @@ $saveOrder = $listOrder == 'a.ordering';
             <label class="filter-search-lbl" for="filter_search"><?php echo JText::_('JSEARCH_FILTER_LABEL'); ?></label>
             <input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo JText::_('COM_CONTENT_FILTER_SEARCH_DESC'); ?>" />
 
+            <input type="text" size="11" name="filter_start" id="jform_filter_start" value="<?php echo $this->escape($this->state->get('filter.start')); ?>" title="تاريخ البداية" />
+            <input type="text" size="11" name="filter_end" id="jform_filter_end" value="<?php echo $this->escape($this->state->get('filter.end')); ?>" title="تاريخ النهاية" />
+
             <button type="submit" class="btn"><?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
-            <button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
+            <button type="button" onclick="document.id('jform_filter_fixed').value='';
+            document.id('jform_filter_left_money').value='';
+            document.id('jform_filter_delivered').value='';
+            document.id('jform_filter_deviceType').value='';
+            document.id('jform_filter_end').value='';
+            document.id('jform_filter_clientId').value='';
+            document.id('jform_filter_start').value='';
+            document.id('filter_search').value='';
+            this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
+        </div>
+        <div class="filter-search fltlft">
+
         </div>
         <div class="filter-select fltrt">
-            <select name="filter_fixed" class="inputbox" onchange="this.form.submit()">
+            <select name="filter_fixed" id="jform_filter_fixed" class="inputbox" onchange="this.form.submit()">
                 <option value="">- حالة الإصلاح -</option>
                 <option value="1" <?php if (is_numeric($this->state->get('filter.fixed')) && $this->state->get('filter.fixed')==1) echo 'selected="selected"' ?>>تم الإصلاح</option>
                 <option value="0" <?php if (is_numeric($this->state->get('filter.fixed')) && $this->state->get('filter.fixed')==0) echo 'selected="selected"' ?>>لم يتم الإصلاح</option>
             </select>
-            
-            <select name="filter_left_money" class="inputbox" onchange="this.form.submit()">
+
+            <select name="filter_left_money" id="jform_filter_left_money" class="inputbox" onchange="this.form.submit()">
                 <option value="">- حالة الدفع -</option>
                 <option value="0" <?php if (is_numeric($this->state->get('filter.left_money')) && $this->state->get('filter.left_money')==0) echo 'selected="selected"' ?>>تم الدفع</option>
                 <option value="1" <?php if (is_numeric($this->state->get('filter.left_money')) && $this->state->get('filter.left_money')==1) echo 'selected="selected"' ?>>متبقي</option>
             </select>
-            
-            <select name="filter_delivered" class="inputbox" onchange="this.form.submit()">
+
+            <select name="filter_delivered" id="jform_filter_delivered" class="inputbox" onchange="this.form.submit()">
                 <option value="">- حالة التسليم -</option>
                 <option value="1" <?php if (is_numeric($this->state->get('filter.delivered')) && $this->state->get('filter.delivered')==1) echo 'selected="selected"' ?> >تم التسليم للعميل</option>
                 <option value="0" <?php if (is_numeric($this->state->get('filter.delivered')) && $this->state->get('filter.delivered')==0) echo 'selected="selected"' ?> >لم يتم التسليم للعميل</option>
             </select>
-            
-            <select name="filter_deviceType" class="inputbox" onchange="this.form.submit()">
+
+            <select name="filter_deviceType" id="jform_filter_deviceType" class="inputbox" onchange="this.form.submit()">
                 <option value="">- أنواع الأجهزة -</option>
                 <?php echo JHtml::_('select.options', $this->state->get('deviceTypesList'), 'value', 'text',$this->state->get('filter.deviceType') );?>
             </select>
-            
-            <select name="filter_clientId" class="inputbox" onchange="this.form.submit()">
+
+            <select name="filter_clientId" id="jform_filter_clientId" class="inputbox" onchange="this.form.submit()">
                 <option value="">- العملاء -</option>
                 <?php echo JHtml::_('select.options', $this->state->get('clientIdsList'), 'value', 'text', $this->state->get('filter.clientId'));?>
             </select>

@@ -102,11 +102,24 @@ class MaintModelMaints extends JModelList {
             $clientId = (int) $clientId;
             $query->where('o.client_id = "' . $clientId . '"');
         }
-        
+
         $deviceType = $this->getState('filter.deviceType');
         if ($deviceType) {
             $deviceType = $db->getEscaped( $deviceType );
             $query->where('o.device_type = "' . $deviceType . '"');
+        }
+
+        $start = $this->getState('filter.start');
+        if ($start) {
+            $start = $db->getEscaped( $start );
+            $query->where('o.entered_at >= "' . $start . ' 00:00:00"');
+        }
+
+
+        $end = $this->getState('filter.end');
+        if ($end) {
+            $end = $db->getEscaped( $end );
+            $query->where('o.entered_at <= "' . $end . ' 00:00:00"');
         }
 
 
@@ -115,7 +128,7 @@ class MaintModelMaints extends JModelList {
         if (!empty($search)) {
             if (is_numeric($search)) {
                 $search = (int) $search;
-                $query->where('(o.id =' . $search . '   
+                $query->where('(o.id =' . $search . '
                                 OR o.phone = "' . $search . '"
                                 OR o.mobile = "' . $search . '" )');
             } else {
@@ -178,6 +191,18 @@ class MaintModelMaints extends JModelList {
 
         $clientId = $this->getUserStateFromRequest($this->context . '.filter.clientId', 'filter_clientId');
         $this->setState('filter.clientId', $clientId);
+
+        $start = $this->getUserStateFromRequest($this->context . '.filter.start', 'filter_start');
+        $end   = $this->getUserStateFromRequest($this->context . '.filter.end', 'filter_end');
+        if ($start && $end && ($start=strtotime($start)) && ($end=strtotime($end)) ) {
+            if ($start > $end) {
+              $this->setState('filter.start', date('Y-m-d',$end));
+              $this->setState('filter.end', date('Y-m-d',$start));
+            } else {
+              $this->setState('filter.start', date('Y-m-d',$start));
+              $this->setState('filter.end', date('Y-m-d',$end));
+            }
+        }
 
         // List state information.
         parent::populateState('o.id', 'desc');
