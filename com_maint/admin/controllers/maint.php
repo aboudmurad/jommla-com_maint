@@ -10,6 +10,10 @@ jimport('joomla.application.component.controllerform');
  * HelloWorld Controller
  */
 class MaintControllerMaint extends JControllerForm {
+  public function getList() {
+
+  }
+
 
   /**
    * Setting the toolbar

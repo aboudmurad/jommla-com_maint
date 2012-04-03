@@ -37,7 +37,7 @@ class MaintModelMaint extends JModelAdmin {
      * @return	boolean	True on success.
      */
     public function save($data) {
- 
+
         //make entries
         $orderObj = $this->getTable();
         $clientObj = $this->getTable('client');
@@ -54,7 +54,7 @@ class MaintModelMaint extends JModelAdmin {
     private function mergeOrderData($data, $orderObj, $clientObj) {
        	$currentLoggedUser =& JFactory::getUser();
         $orderObj->load($data['id']);
-        
+
         if (!$orderObj->workers_recipient_id)
         {
             $order['workers_recipient_id'] = $currentLoggedUser->id;
@@ -75,34 +75,34 @@ class MaintModelMaint extends JModelAdmin {
             'delivered_at' => $data['delivered_at'],
             'client_id' => $clientObj->id
         );
-       
-        if (strtotime($data['fixed_at'])) { 
+
+        if (strtotime($data['fixed_at'])) {
             $order['fixed'] = 1;
             $order['workers_fixer_id'] = $currentLoggedUser->id;
         }else {
             $order['fixed'] = 0;
         }
-        
 
-        $orderObj->bind($order);       
+
+        $orderObj->bind($order);
     }
 
     private function mergeClientData($data, $clientObj) {
         //check if the user email or phone exists
         $oldClient = false;
-        if (($oldClient = $this->getClientById($data['client_id'])) ||
+        if (($oldClient = $this->getClientByName($data['client_name'])) ||
                 ($oldClient = $this->getClientByPhone($data['client_phone'])) ||
                 ($oldClient = $this->getClientByMobile($data['client_mobile'])) ||
-                ($oldClient = $this->getClientByEmail($data['client_email']) )) {
+                ($oldClient = $this->getClientByEmail($data['client_email'])) ) {
 
             $clientObj->bind($oldClient);
             $clientObj->name = $data['client_name'];
             $clientObj->phone = $data['client_phone'];
             $clientObj->mobile = $data['client_mobile'];
 
-            if (!$clientObj->email && isset($data['client_email']) && $data['client_email']) {
+            //if (!$clientObj->email && isset($data['client_email']) && $data['client_email']) {
                 $clientObj->email = $data['client_email'];
-            }
+            //}
         } else {
             $clientData = array(
                 'name' => $data['client_name'],
@@ -115,7 +115,7 @@ class MaintModelMaint extends JModelAdmin {
     }
 
     /**
-     * 
+     *
      * @return array
      */
     public function getClientByPhone($phone) {
@@ -131,7 +131,7 @@ class MaintModelMaint extends JModelAdmin {
     }
 
     /**
-     * 
+     *
      * @return array
      */
     public function getClientByMobile($mobile) {
@@ -148,7 +148,24 @@ class MaintModelMaint extends JModelAdmin {
     }
 
     /**
-     * 
+     *
+     * @return array
+     */
+    public function getClientByName($name) {
+        if (!$name)
+            return false;
+        $query = 'SELECT *' .
+                ' FROM #__maint_clients AS c' .
+                ' WHERE c.name = "' . $name . '"';
+
+        // Create a new query object.
+        $db = JFactory::getDBO();
+        $db->setQuery($query);
+        return $db->loadObject();
+    }
+
+    /**
+     *
      * @return array
      */
     public function getClientById($id) {
@@ -165,7 +182,7 @@ class MaintModelMaint extends JModelAdmin {
     }
 
     /**
-     * 
+     *
      * @return array
      */
     public function getClientByEmail($email) {
@@ -188,7 +205,7 @@ class MaintModelMaint extends JModelAdmin {
     public function getOrder() {
         if ($this->order)
             return $this->order;
-        
+
         $id = JRequest::getInt('id');
 
         // Create a new query object.
@@ -264,6 +281,20 @@ class MaintModelMaint extends JModelAdmin {
             $data->client_email  = $data->email;
         }
         return $data;
+    }
+
+    public function getNameList() {
+        $db = JFactory::getDBO();
+        $name = $db->getEscaped( JRequest::getVar('query'));
+        $db->setQuery('SELECT * from `#__maint_clients` WHERE `name` LIKE "%'.$name.'%"');
+        return $db->loadAssocList('name');
+    }
+
+    public function getDeviceList() {
+        $db = JFactory::getDBO();
+        $name = $db->getEscaped( JRequest::getVar('query'));
+        $db->setQuery('SELECT `device_type` from `#__maint_orders` WHERE `device_type` LIKE "%'.$name.'%"');
+        return $db->loadAssocList(NULL, 'device_type');
     }
 
 }
