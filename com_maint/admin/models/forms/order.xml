@@ -9,7 +9,7 @@
 			label="إسم العميل"
       description="إسم العميل صاحب الجهاز"	/>
 
-    <field name="client_phone" type="text" size="40"	class="inputbox" default=""  validate="integer"   required="true"
+    <field name="client_phone" type="text" size="40"	class="inputbox" default=""  validate="integer"   
 			label="الهاتف"
       description="هاتف العميل للاتصال به في حالة دعت الحاجه الي ذلك"	/>
       
