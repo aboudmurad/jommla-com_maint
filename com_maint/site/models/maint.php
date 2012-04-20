@@ -1,4 +1,5 @@
 <?php
+
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
@@ -8,38 +9,35 @@ jimport('joomla.application.component.modelitem');
 /**
  * HelloWorld Model
  */
-class MaintModelMaint extends JModelItem
-{
-  /**
-   * @var string msg
-   */
-  protected $order;
+class MaintModelMaint extends JModelItem {
 
-  /**
-   * Get the message
-   * @return string The message to be displayed to the user
-   */
-  public function getOrder()
-  {
-        $id    = JRequest::getInt('id');
-        $phone = JRequest::getString('phone');
-    if (!isset($this->order))
-    {
-            $client = $order = NULL;
+    /**
+     * @var string msg
+     */
+    protected $orders;
+
+    /**
+     * Get the message
+     * @return string The message to be displayed to the user
+     */
+    public function getOrders() {
+        $num = JRequest::getInt('num');
+        if (!isset($this->orders) || !$this->orders) {
             $db = $this->getDbo();
 
             $db->setQuery(
-                    'SELECT *' .
+                    'SELECT o.*, c.name' .
                     ' FROM #__maint_orders AS o' .
-                    ' LEFT JOIN #__maint_clients AS c '.
-                          'ON c.id = o.client_id'.
-                    ' WHERE c.phone = "'. $phone .'"'.
-                       ' AND o.id = '.$id
+                    ' LEFT JOIN #__maint_clients AS c ' .
+                    ' ON c.id = o.client_id' .
+                    ' WHERE c.phone = "' . $num . '"' .
+                    ' OR o.id = ' . $num .
+                    ' ORDER BY o.entered_at DESC'
             );
 
-            $this->order = $db->loadObject();
-
+            $this->orders = $db->loadObjectList();   
+        }
+        return $this->orders;
     }
-    return $this->order;
-  }
+
 }

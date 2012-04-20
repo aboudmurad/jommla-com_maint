@@ -53,7 +53,7 @@ class JFormRuleDatum extends JFormRule
         $entered_at = strtotime($request['jform']['entered_at']);
         $date       = strtotime($value);
 		// Test the two values against each other.
-		if ( false==$date || $date > $entered_at ) {
+		if ( $date <=0  || $date > $entered_at ) {
 			return true;
 		}
 

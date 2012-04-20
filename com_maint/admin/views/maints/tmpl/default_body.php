@@ -47,7 +47,7 @@ defined('_JEXEC') or die('Restricted Access');
             <?php echo $item->fixed_at; ?>
         </td>
 
-        <td <?php if (strtotime($item->delivered_at)): ?>class="green"<?php else: ?>class="yellow"<?php endif; ?>>
+        <td <?php if (strtotime($item->delivered_at) > 0): ?>class="green"<?php else: ?>class="yellow"<?php endif; ?>>
             <?php echo $item->delivered_at; ?>
         </td>
     </tr>

@@ -76,7 +76,7 @@ class MaintModelMaint extends JModelAdmin {
             'client_id' => $clientObj->id
         );
 
-        if (strtotime($data['fixed_at'])) {
+        if (strtotime($data['fixed_at']) > 0) {
             $order['fixed'] = 1;
             $order['workers_fixer_id'] = $currentLoggedUser->id;
         }else {
