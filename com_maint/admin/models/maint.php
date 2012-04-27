@@ -64,6 +64,7 @@ class MaintModelMaint extends JModelAdmin {
         $order = array(
             'device_type' => $data['device_type'],
             'device_desc' => $data['device_desc'],
+            'device_accessories' => $data['device_accessories'],
             'work_required' => $data['work_required'],
             'entered_at' => $data['entered_at'],
             'work_done' => $data['work_done'],

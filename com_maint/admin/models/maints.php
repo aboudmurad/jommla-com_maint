@@ -32,6 +32,7 @@ class MaintModelMaints extends JModelList {
                 'c.mobile',
                 'c.email',
                 'o.device_type',
+                'o.device_accessories',
                 'o.fixed',
                 'o.discount_money',
                 'o.total_money',
@@ -137,6 +138,7 @@ class MaintModelMaints extends JModelList {
                              OR u.name LIKE ' . $search . '
                              OR ux.name LIKE ' . $search . '
                              OR c.email LIKE ' . $search . '
+                             OR o.device_accessories  LIKE ' . $search . '
                              OR o.device_type  LIKE ' . $search . '
                              OR o.device_desc LIKE ' . $search . '
                              OR o.work_required LIKE ' . $search . '

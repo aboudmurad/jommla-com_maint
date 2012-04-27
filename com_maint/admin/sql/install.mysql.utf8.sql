@@ -23,13 +23,13 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `#__maint_clients`;
 CREATE TABLE `#__maint_clients` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
+  `name` varchar(120) NOT NULL,
   `phone` varchar(20) NOT NULL,
   `mobile` varchar(20) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `email` varchar(120) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE (`phone`, `email`, `name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+  UNIQUE (`phone`, `email`, `name`)  
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 --
@@ -54,8 +54,9 @@ CREATE TABLE `#__maint_orders` (
   `workers_fixer_id` int(10) unsigned NOT NULL,
   `workers_recipient_id` int(10) unsigned NOT NULL,
 
-  `device_type` varchar(255) NOT NULL,
+  `device_type` varchar(120) NOT NULL,
   `device_desc` TEXT NULL ,
+  `device_accessories` TEXT NULL ,
   `work_required` TEXT NOT NULL,
   `fixed`   BOOLEAN    NOT NULL DEFAULT '0',
 
@@ -70,14 +71,14 @@ CREATE TABLE `#__maint_orders` (
   `fixed_at` timestamp NULL DEFAULT NULL,
   `delivered_at` TIMESTAMP NULL,
   PRIMARY KEY (`id`),
-  KEY `device_type` (`device_type`),
-  KEY `client_id` (`client_id`),
-  KEY `fixed` (`fixed`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+  KEY `device_type` (`device_type`) ,
+  KEY `client_id` (`client_id`) ,
+  KEY `fixed` (`fixed`) 
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Dumping data for table `ly9lb_orders`
 --
 
-INSERT INTO `#__maint_orders` (`client_id`,`workers_recipient_id` , `device_type`, `device_desc`, `work_required`, `total_money`, `discount_money`, `paied_money`, `left_money`) VALUES
-    (1, 1, 'HardDisk', 'Western Digital', 'Fix Media', 120, 20, 50, 50);
+INSERT INTO `#__maint_orders` (`client_id`,`workers_recipient_id` , `device_type`,`device_accessories`, `device_desc`, `work_required`, `total_money`, `discount_money`, `paied_money`, `left_money`) VALUES
+    (1, 1, 'HardDisk', 'كيس', 'Western Digital', 'Fix Media', 120, 20, 50, 50);

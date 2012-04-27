@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="module" client="site" version="1.5.0" method="upgrade">
+  <name>Maintainance Workshop module</name>
+  <author>Ahmed M. Araby</author>
+  <creationDate>April 21, 2012</creationDate>
+    <authorEmail>araby.ahmed@gmail.com</authorEmail>
+  <version>0.1</version>
+  <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+  <description>MAINT_DESCRIPTION</description>
+  <files>
+    <filename module="mod_maint">mod_maint.php</filename>
+    <filename>index.html</filename>
+    <folder>tmpl</folder>
+  </files>
+</install>

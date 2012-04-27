@@ -21,17 +21,18 @@ class MaintModelMaint extends JModelItem {
      * @return string The message to be displayed to the user
      */
     public function getOrders() {
-        $num = JRequest::getInt('num');
+        $num = JRequest::getVar('num');
         if (!isset($this->orders) || !$this->orders) {
             $db = $this->getDbo();
-
+            $num= $db->getEscaped($num);
             $db->setQuery(
                     'SELECT o.*, c.name' .
                     ' FROM #__maint_orders AS o' .
                     ' LEFT JOIN #__maint_clients AS c ' .
                     ' ON c.id = o.client_id' .
                     ' WHERE c.phone = "' . $num . '"' .
-                    ' OR o.id = ' . $num .
+                    ' OR c.mobile = "' . $num . '"' .
+                    ' OR o.id = "' . $num .'"'.
                     ' ORDER BY o.entered_at DESC'
             );
 

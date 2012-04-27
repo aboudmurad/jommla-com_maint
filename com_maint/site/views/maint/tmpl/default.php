@@ -102,6 +102,14 @@ defined('_JEXEC') or die('Restricted access');
                     </div>
         <?php endif; ?>
 
+                
+        <?php if ($order->device_accessories): ?>
+                    <div>
+                        <div class="label"> ملحقات الجهاز  </div>
+                        <div><?php echo $order->device_accessories ?></div>
+                    </div>
+        <?php endif; ?>
+                
                 <div>
                     <div class="label"> العمل المطلوب : </div>
                     <div><?php echo $order->work_required ?></div>
