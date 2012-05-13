@@ -33,7 +33,7 @@ CREATE TABLE `#__maint_money` (
 
 
 INSERT INTO `#__maint_money` (`worker_id`, `money`, `datetime_to`) VALUES
-(42, 20, NOW());
+(42, 50, NOW());
 --
 -- Table structure for table `ly9lb_clients`
 --
