@@ -10,7 +10,7 @@
 	<copyright>No Copyright Reserved.</copyright>
 	<license>Mozilla Public Licence</license>
 	<!--  The version string is recorded in the components table -->
-	<version>0.1</version>
+	<version>0.1.59</version>
 	<!-- The description is optional and defaults to the name -->
 	<description>COM_MAINT_DESCRIPTION</description>
 
@@ -25,19 +25,6 @@
 		</sql>
 	</uninstall>
     
-<access component="com_maint">
-	<section name="component">
-		<action name="core.admin" title="JACTION_ADMIN" description="JACTION_ADMIN_COMPONENT_DESC" />
-		<action name="core.manage" title="JACTION_MANAGE" description="JACTION_MANAGE_COMPONENT_DESC" />
-		<action name="core.create" title="JACTION_CREATE" description="JACTION_CREATE_COMPONENT_DESC" />
-		<action name="core.delete" title="JACTION_DELETE" description="JACTION_DELETE_COMPONENT_DESC" />
-		<action name="core.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC" />
-	</section>
-	<section name="message">
-		<action name="core.delete" title="JACTION_DELETE" description="COM_MAINT_ACCESS_DELETE_DESC" />
-		<action name="core.edit" title="JACTION_EDIT" description="COM_MAINT_ACCESS_EDIT_DESC" />
-	</section>
-</access>    
 	<!-- Site Main File Copy Section -->
 	<!-- Note the folder attribute: This attribute describes the folder
 		to copy FROM in the package to install therefore files copied
@@ -69,13 +56,18 @@
 			<filename>index.html</filename>
 			<filename>maint.php</filename>
             <filename>controller.php</filename>
-
+			<filename>config.xml</filename>
+			<filename>access.xml</filename>
+			
             <folder>views</folder>
             <folder>controllers</folder>
             <folder>assets</folder>
             <folder>sql</folder>
             <folder>tables</folder>
             <folder>models</folder>
+            <folder>helper</folder>
+            <folder>button</folder>
+            
 		</files>
 
     <languages folder="admin">

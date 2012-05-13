@@ -5,15 +5,17 @@ defined('_JEXEC') or die('Restricted access');
 
 
 // Access check.
-if (!JFactory::getUser()->authorise('core.manage', 'com_helloworld')) 
+if (!JFactory::getUser()->authorise('core.manage', 'com_maint')) 
 {
 	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 }
 
+JLoader::register('MaintHelper', dirname(__FILE__) . DS . 'helper' . DS . 'maint.php');
+
 // import joomla controller library
 jimport('joomla.application.component.controller');
 
-// Get an instance of the controller prefixed by HelloWorld
+// Get an instance of the controller prefixed by Maint
 $controller = JController::getInstance('Maint');
 
 // Perform the Request task

@@ -7,7 +7,7 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.modelitem');
 
 /**
- * HelloWorld Model
+ * Maint Model
  */
 class MaintModelMaint extends JModelItem {
 

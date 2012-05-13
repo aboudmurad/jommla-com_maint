@@ -6,7 +6,7 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.view');
 
 /**
- * HelloWorld View
+ * Maint View
  */
 class MaintViewMaint extends JView
 {
@@ -27,15 +27,15 @@ class MaintViewMaint extends JView
 			return false;
 		}
 		// Assign the Data
-		$this->form = $form;
+		$this->form  = $form;
 		$this->order = $order;
 
 		// Set the toolbar
 		$this->addToolBar();
 
 
-    // Set the document
-    $this->setDocument();
+        // Set the document
+        $this->setDocument();
 
 
 		// Display the template
@@ -48,16 +48,44 @@ class MaintViewMaint extends JView
 	protected function addToolBar()
 	{
 		JRequest::setVar('hidemainmenu', true);
-		$user		= JFactory::getUser();
-		$userId		= $user->get('id');
-		$isNew      = (false==isset($this->item) || $this->item->id == 0);
+		$user	 = JFactory::getUser();
+		$userId	 = $user->get('id');
+		if ($this->order)
+		    $canDo   = MaintHelper::getActions($this->order->id);
+		else
+		    $canDo   = MaintHelper::getActions(0);
+		$isNew   = (false == isset($this->order) || $this->order->id == 0);
+		$this->canDeliver = $canDo->get('core.deliver');
 
 		JToolBarHelper::title($isNew ? 'جديد'
 		                             : 'تغيير');
-		JToolBarHelper::save2new('maint.save2new');
-		JToolBarHelper::save('maint.save');
-		JToolBarHelper::cancel('maint.cancel', $isNew ? 'JTOOLBAR_CLOSE'
-      	                                                : 'JTOOLBAR_CANCEL');
+		
+		if ($isNew)
+		{
+		    // For new records, check the create permission.
+		    if ($canDo->get('core.create'))
+		    {
+		        JToolBarHelper::apply('maint.apply', 'JTOOLBAR_APPLY');
+		        JToolBarHelper::save('maint.save', 'JTOOLBAR_SAVE');
+		        JToolBarHelper::save2new('maint.save2new');
+		    }
+		} else {
+		    if ($canDo->get("core.edit")) {
+		        JToolBarHelper::apply('maint.apply', 'JTOOLBAR_APPLY');
+		        JToolBarHelper::save('maint.save', 'JTOOLBAR_SAVE');
+		        
+		        // if we can return to make a new one.
+		        if ($canDo->get('core.create'))
+		        {
+		            JToolBarHelper::save2new('maint.save2new');
+		        }
+		    }
+		    
+		    $bar = JToolBar::getInstance('toolbar');
+		    $bar->addButtonPath(JPATH_COMPONENT.'/button/');
+		    $bar->appendButton('Print', 'Print', 'index.php?option=com_maint&task=maints.pprint&id='.$this->order->id, false);
+		}
+		JToolBarHelper::cancel('maint.cancel', 'JTOOLBAR_CANCEL');
 	}
 
 
@@ -73,5 +101,6 @@ class MaintViewMaint extends JView
         $document->addScript(JURI::base(true)  . '/components/com_maint/assets/js/jquery.autocomplete-min.js');
         $document->addScript(JURI::base(true)  . '/components/com_maint/assets/js/my.js?baseUrl='.JURI::base(true));
         $document->addStyleSheet(JURI::base(true)  . '/components/com_maint/assets/css/jquery.autocomplete.css');
+        $document->addStyleSheet(JURI::base(true)  . '/components/com_maint/assets/css/admin.css');
     }
 }

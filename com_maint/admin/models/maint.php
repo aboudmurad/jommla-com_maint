@@ -7,7 +7,7 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.modeladmin');
 
 /**
- * HelloWorld Model
+ * Maint Model
  */
 class MaintModelMaint extends JModelAdmin {
 
@@ -15,7 +15,24 @@ class MaintModelMaint extends JModelAdmin {
      * @var string msg
      */
     protected $order;
-
+    
+    /**
+     * Method override to check if you can edit an existing record.
+     *
+     * @param	array	$data	An array of input data.
+     * @param	string	$key	The name of the key for the primary key.
+     *
+     * @return	boolean
+     * @since	2.5
+     */
+    protected function allowEdit($data = array(), $key = 'id')
+    {
+        // Check specific edit permission then general edit permission.
+        return JFactory::getUser()->authorise('core.edit', 'com_maint.message.'.
+                        ((int) isset($data[$key]) ? $data[$key] : 0))
+                        or parent::allowEdit($data, $key);
+    }
+    
     /**
      * Returns a reference to the a Table object, always creating it.
      *
@@ -37,7 +54,12 @@ class MaintModelMaint extends JModelAdmin {
      * @return	boolean	True on success.
      */
     public function save($data) {
-
+        $isNew		= true;
+        $id			= (!empty($data['id'])) ? $data['id'] : (int)$this->getState($this->getName().'.id');
+        if ($id > 0) {
+            $isNew = false;
+        }
+        
         //make entries
         $orderObj = $this->getTable();
         $clientObj = $this->getTable('client');
@@ -46,46 +68,105 @@ class MaintModelMaint extends JModelAdmin {
         $clientObj->store();
 
         $this->mergeOrderData($data, $orderObj, $clientObj);
-
         $orderObj->store();
+
+        if (isset($orderObj->id)) {
+            $this->setState($this->getName().'.id', $orderObj->id);
+        }
+        $this->setState($this->getName().'.new', $isNew);
         return true;
     }
 
     private function mergeOrderData($data, $orderObj, $clientObj) {
-       	$currentLoggedUser =& JFactory::getUser();
+        $user	 = JFactory::getUser();
+        $userId	 = $user->get('id');
+        $canDo   = MaintHelper::getActions(0);
+        $canDeliver = $canDo->get('core.deliver');
+        
+        $order = array();
+        
+        $currentLoggedUser =& JFactory::getUser();
         $orderObj->load($data['id']);
-
-        if (!$orderObj->workers_recipient_id)
-        {
-            $order['workers_recipient_id'] = $currentLoggedUser->id;
-        }
-
+        
         $leftMoney = $data['total_money'] - ( $data['paied_money'] + $data['discount_money'] );
         $order = array(
             'device_type' => $data['device_type'],
             'device_desc' => $data['device_desc'],
             'device_accessories' => $data['device_accessories'],
-            'work_required' => $data['work_required'],
+            'work_required'      => $data['work_required'],
             'entered_at' => $data['entered_at'],
-            'work_done' => $data['work_done'],
+            'work_done'  => $data['work_done'],
             'total_money' => $data['total_money'],
             'discount_money' => $data['discount_money'],
-            'paied_money' => $data['paied_money'],
-            'left_money' => $leftMoney,
-            'fixed_at' => $data['fixed_at'],
-            'delivered_at' => $data['delivered_at'],
-            'client_id' => $clientObj->id
+            'paied_money'    => $data['paied_money'],
+            'left_money'     => $leftMoney,
+            'fixed_at'       => $data['fixed_at'],
+            'delivered_at'   => $data['delivered_at'],
+            'client_id'      => $clientObj->id,
+            'extra_parts_notes'    => $data['extra_parts_notes'],
+            'extra_parts_notes_paied'    => $data['extra_parts_notes_paied']
         );
+        
+        if (!$orderObj->workers_recipient_id)
+        {
+            $order['workers_recipient_id'] = $currentLoggedUser->id;
+        }
 
         if (strtotime($data['fixed_at']) > 0) {
             $order['fixed'] = 1;
-            $order['workers_fixer_id'] = $currentLoggedUser->id;
+            $order['workers_fixer_id'] = "$currentLoggedUser->id";
         }else {
             $order['fixed'] = 0;
         }
+        
 
-
+        $netMoney = 0;
+        //calculate money paied
+        if ($orderObj->paied_money  ) {
+            $netMoney = $order['paied_money'] - $orderObj->paied_money;
+        } else {
+            $netMoney = $order['paied_money']; 
+        }
+        
+        
+        if ($netMoney != 0) {
+            // update worker holding money.
+            $this->addMoneyToWorker($netMoney, $order); 
+        }
+         
         $orderObj->bind($order);
+        return $orderObj; 
+    }
+    
+    private function addMoneyToWorker($netMoney, $order) {
+
+        $currentLoggedUser =& JFactory::getUser();
+        $mm = $this->getTable('money');
+        
+        $query = 'SELECT *' .
+                 ' FROM #__maint_money AS m' .
+                 ' WHERE m.worker_id = "' . $currentLoggedUser->id . '"'.
+                    'AND m.manager_id = 0 ';
+        $db = JFactory::getDBO();
+        $db->setQuery($query);
+        $oldUser =  $db->loadObject();
+
+        if ($oldUser->id && $mm->load($oldUser->id)) {
+            $mm->money       =   ($mm->money + $netMoney);
+            $mm->datetime_to =    date('Y-m-d H:i:s');
+        } else {
+            $mm->bind(array(
+                            'worker_id'    =>    $currentLoggedUser->id,
+                            'datetime_from'=>    date('Y-m-d H:i:s'),
+                            'datetime_to'  =>    date('Y-m-d H:i:s'),
+                            'money'        =>    $netMoney,
+                            ));
+        }
+        
+        if ($mm->money == 0) {
+            return $mm->delete(); 
+        }
+        return $mm->store();        
     }
 
     private function mergeClientData($data, $clientObj) {

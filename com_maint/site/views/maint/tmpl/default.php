@@ -3,6 +3,10 @@
 defined('_JEXEC') or die('Restricted access');
 ?>
 <style>
+    #orderList {
+        padding-bottom: 10em;
+    }
+    
     #orderList > div {
         margin-top: 2em;
     }

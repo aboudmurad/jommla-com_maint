@@ -16,6 +16,7 @@ echo
             <?php endif ?>
         <ul class="adminformlist">
             <?php foreach ($this->form->getFieldset() as $field): ?>
+            <?php if (false==$this->canDeliver && $field->name=='jform[delivered_at]') continue;?>
                 <li><?php echo $field->label;
             echo $field->input; ?></li>
 <?php endforeach; ?>

@@ -6,12 +6,33 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.controlleradmin');
 
 /**
- * HelloWorlds Controller
+ * MaintControllerMaints Controller
  */
 class MaintControllerMaints extends JControllerAdmin
 {
+    
+    public function Show() {
+        $id = (int) $_POST['cid'][0];
+        $this->setRedirect(JRoute::_('index.php?option='.$this->option.'&view=show&id='.$id, false));
+    }
+    
+    public function pprint() {
+        $id = JRequest::getInt('id');
+        $this->setRedirect(JRoute::_('index.php?option='.$this->option.'&view=pprint&id='.$id, false));
+    }
+    
     public function reports() {
         $this->setRedirect(JRoute::_('index.php?option='.$this->option.'&view=reports', false));
+    }
+    
+    public function money() {
+        $this->setRedirect(JRoute::_('index.php?option='.$this->option.'&view=money', false));
+    }
+    
+    public function moneySW() {
+        $money = $this->getModel('Money');
+        $money->moneyPaySw();
+        $this->setRedirect(JRoute::_('index.php?option='.$this->option.'&view=money', false));
     }
     
 	/**

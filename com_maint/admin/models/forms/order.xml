@@ -33,7 +33,7 @@
 			label="وصف الجهاز"
       description="وصف الجهاز"	/>
       
-    <field name="device_accessories" type="textarea"	class="inputbox" default="" 
+    <field name="device_accessories" type="textarea"	class="inputbox" required="true" default="لايوجد" 
 			label="ملحقات الجهاز"
       description="ملحقات الجهاز"	/>
 
@@ -45,7 +45,17 @@
 			label="العمل"
       description="العمل اللذي تم عمله لإصلاح العطل"	/>
 
-    <field name="total_money" type="text" size="5"	default=""  required="true" validate="integer"
+
+    <field name="extra_parts_notes" type="textarea"	class="inputbox" default=""
+			label="ملاحظات/ تركيبات"
+      description="ملاحظات/ تركيبات"	/>
+
+    <field name="extra_parts_notes_paied" type="list" label="تم دفع : ملاحظات/ تركيبات" description="تم دفع : ملاحظات/ تركيبات">
+    	<option value="0">لا</option>
+  		<option value="1">نعم</option>
+    </field>
+
+    <field name="total_money" type="text" size="5"	default="" validate="integer"
 			label="المبلغ الكلّي"
       description="التكلفة الكلية"	/>
 

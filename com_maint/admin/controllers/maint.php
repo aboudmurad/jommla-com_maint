@@ -7,9 +7,14 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.controllerform');
 
 /**
- * HelloWorld Controller
+ * MaintControllerMaint Controller
  */
 class MaintControllerMaint extends JControllerForm {
+    
+  public function goPrint() {
+      
+  }
+    
   public function getList() {
 
   }

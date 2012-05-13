@@ -1,5 +1,40 @@
-.icon-32-icon-32-search {
-  background-image: url("../images/icon-32-search.png");
+.displayOrder {
+	color: #656565;
+	direction: rtl;
+	text-align: rigth;
+	margin: 0 auto 0 auto;
+	font-size: 1.3em;
+}
+
+.displayOrder tbody tr:hover {
+	background-color: #A6BF39;
+}
+
+.displayOrder tbody td {
+	height: 2em;
+	width : 200px;
+	border-bottom: 1px solid #E6E6E6;
+}
+
+td.title {
+	color: #7D7D7D;
+}
+
+
+.icon-32-Print {
+	background-image: url("../images/print.png");
+}
+
+.icon-32-money {
+  background-image: url("../images/money.png");
+}
+
+.icon-32-alf {
+  background-image: url("../images/alf.png");
+}
+
+.icon-32-icon-print{
+  background-image: url("../images/printer.png");
 }
 
 .icon-32-icon-32-xml {
@@ -9,10 +44,10 @@
 .fixed_0 {
      background-image: url("../images/publish_r.png");
              display: inline-block;
+
     height: 16px;
     width: 16px;
 }
-
 table.adminlist tr td{
       text-align: center;
 }
@@ -24,10 +59,10 @@ table.adminlist tr td{
     width: 16px;
 }
 
-table.adminlist tbody tr td.yellow {
+table.adminlist tbody tr td.yellow,.yellow {
     background-color: #fbcb09 ;
 }
 
-table.adminlist tbody tr td.green {
+table.adminlist tbody tr td.green,.green {
     background-color: #c6d880 ;
 }

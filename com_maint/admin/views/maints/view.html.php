@@ -7,7 +7,7 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.view');
 
 /**
- * HTML View class for the HelloWorld Component
+ * HTML View class for the Maint Component
  */
 class MaintViewMaints extends JView {
 
@@ -38,17 +38,35 @@ class MaintViewMaints extends JView {
      * Setting the toolbar
      */
     protected function addToolBar() {
-        //$canDo = MessagesHelper::getActions();
+        $canDo = MaintHelper::getActions();
+        $bar = JToolBar::getInstance('toolbar');
 
         JToolBarHelper::title(' الصيانة');
-
-        $bar = JToolBar::getInstance('toolbar');
-        //$bar->appendButton('Popup', 'icon-32-xml', 'التقارير', 'index.php?option=com_messages&amp;view=config&amp;tmpl=component', 850, 400);
+        
+        $toolbar = JToolBar::getInstance('toolbar');
+        
         JToolBarHelper::custom('maints.reports', 'icon-32-xml.png', '', 'التقارير', false, false);
-
-        JToolBarHelper::deleteListX('', 'maints.delete');
-        JToolBarHelper::editListX('maint.edit');
-        JToolBarHelper::addNewX('maint.add');
+        
+        JToolBarHelper::customX('maints.show', 'preview', '', 'عرض');
+        
+        if ($canDo->get('core.delete')) {
+            JToolBarHelper::deleteListX('', 'maints.delete');
+        }
+        
+        if ($canDo->get('core.edit')) {
+            JToolBarHelper::editListX('maint.edit');
+        }
+        
+        if ($canDo->get('core.create')) {
+            JToolBarHelper::addNewX('maint.add');
+        }
+        
+        if ($canDo->get('core.admin'))
+        {
+            JToolBarHelper::divider();
+            JToolBarHelper::custom('maints.money', 'money.png', '', 'التوريد', false, false);
+            JToolBarHelper::preferences('com_maint');
+        }
     }
 
    /**
@@ -57,15 +75,15 @@ class MaintViewMaints extends JView {
      * @return void
      */
     protected function setDocument() {
-        $doc = JFactory::getDocument();
-        $doc->setTitle('إدارة ورشة صيانة الحواسيب');
-
-        $doc->addStyleSheet(JURI::base(true)  . '/components/com_maint/assets/css/datepicker/datepicker_dashboard/datepicker_dashboard.css');
-        $doc->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Locale.ar-AA.DatePicker.js');
-        $doc->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Picker.js');
-        $doc->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Picker.Attach.js');
-        $doc->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Picker.Date.js');
-        $doc->addScriptDeclaration("
+        $document = JFactory::getDocument();
+        $document->setTitle('إدارة ورشة صيانة الحواسيب');
+        $document->addStyleSheet(JURI::base(true)  . '/components/com_maint/assets/css/admin.css');
+        $document->addStyleSheet(JURI::base(true)  . '/components/com_maint/assets/css/datepicker/datepicker_dashboard/datepicker_dashboard.css');
+        $document->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Locale.ar-AA.DatePicker.js');
+        $document->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Picker.js');
+        $document->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Picker.Attach.js');
+        $document->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Picker.Date.js');
+        $document->addScriptDeclaration("
 		window.addEvent('domready', function(){
 			Locale.use('ar-AA');
 			new Picker.Date($$('input[id=jform_filter_start]'), {

@@ -9,10 +9,6 @@ $listDirn = $this->escape($this->state->get('list.direction'));
 $saveOrder = $listOrder == 'a.ordering';
 ?>
 
-<style>
-    @import url(components/com_maint/assets/css/admin.css);
-</style>
-
 <form action="<?php echo JRoute::_('index.php?option=com_maint'); ?>" method="post" name="adminForm" id="adminForm">
     <fieldset id="filter-bar">
         <div class="filter-search fltlft">

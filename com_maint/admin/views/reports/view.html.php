@@ -7,7 +7,7 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.view');
 
 /**
- * HTML View class for the HelloWorld Component
+ * HTML View class for the Maint Component
  */
 class MaintViewReports extends JView {
 
@@ -55,7 +55,9 @@ class MaintViewReports extends JView {
     protected function setDocument() {
         $doc = JFactory::getDocument();
         $doc->setTitle('إدارة ورشة صيانة الحواسيب');
-
+        
+        JToolBarHelper::back('JTOOLBAR_BACK', 'index.php?option=com_maint');
+        
         $doc->addStyleSheet(JURI::base(true)  . '/components/com_maint/assets/css/datepicker/datepicker_dashboard/datepicker_dashboard.css');
         $doc->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Locale.ar-AA.DatePicker.js');
         $doc->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Picker.js');

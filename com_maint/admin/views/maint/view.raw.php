@@ -6,7 +6,7 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.view');
 
 /**
- * HelloWorld View
+ * Maint View
  */
 class MaintViewMaint extends JView
 {

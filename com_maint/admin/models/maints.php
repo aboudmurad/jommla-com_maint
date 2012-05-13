@@ -7,7 +7,7 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.modellist');
 
 /**
- * HelloWorld Model
+ * Maint Model
  */
 class MaintModelMaints extends JModelList {
 
