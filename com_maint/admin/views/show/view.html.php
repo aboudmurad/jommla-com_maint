@@ -42,7 +42,7 @@ class maintViewShow extends JView {
         
         $bar = JToolBar::getInstance('toolbar');
         $bar->addButtonPath(JPATH_COMPONENT.'/button/');
-        $bar->appendButton('Print', 'Print', 'index.php?option=com_maint&task=maints.pprint&id='.$this->id, false);
+        $bar->appendButton('Print', 'Print', 'index.php?option=com_maint&task=maints.pprint&id='.$this->id);
         
         if ($canDo->get('core.edit')) {
             JToolBarHelper::editList('maint.edit');

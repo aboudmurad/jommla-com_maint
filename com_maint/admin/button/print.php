@@ -25,7 +25,7 @@ class JButtonPrint extends JButton
 	 */
 	protected $_name = 'Print';
 
-	public function fetchButton($type='Print', $name = '', $url = '', $width=400, $height=300)
+	public function fetchButton($type='Print', $name = '', $url = '', $width=440, $height=600)
 	{
 	    
 	    

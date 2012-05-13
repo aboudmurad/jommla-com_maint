@@ -83,7 +83,7 @@ class MaintViewMaint extends JView
 		    
 		    $bar = JToolBar::getInstance('toolbar');
 		    $bar->addButtonPath(JPATH_COMPONENT.'/button/');
-		    $bar->appendButton('Print', 'Print', 'index.php?option=com_maint&task=maints.pprint&id='.$this->order->id, false);
+		    $bar->appendButton('Print', 'Print', 'index.php?option=com_maint&task=maints.pprint&id='.$this->order->id);
 		}
 		JToolBarHelper::cancel('maint.cancel', 'JTOOLBAR_CANCEL');
 	}

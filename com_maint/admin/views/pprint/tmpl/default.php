@@ -14,8 +14,8 @@ defined('_JEXEC') or die('Restricted Access');
               direction: rtl;
               text-align: right;
               border: 1px solid;
-              width: 200mm;
-              height: 70mm;
+              width: 105mm;
+              height: 148mm;
           }
       </style>
    </head>
@@ -25,19 +25,21 @@ defined('_JEXEC') or die('Restricted Access');
 <div style='text-align: center'>
     <h2> إيصال استلام </h2>
 </div>
-<div style="clear: both; height: 20mm;">
-    <div style='width: 120mm; float: right;'>
+<br >
+<div style="clear: both; height: 20mm;margin-bottom:50 mm;">
+    <div>
         <img src="<?php echo JURI::base()?>/components/com_maint/assets/images/logo.png" />
-        
     </div>
-    <div style="padding-right: 50mm;font-size: 1.3em;">
-            
+</div>
+<br >
+<div style="font-size: 1.3em;">
             10 شارع ورا القمر
             <br >
             هاتف : 999 999 999 99+
-     </div>
-    
 </div>
+<br >
+<br >
+<br >
 <div>
 <table class="displayOrder" style="font-size: 1.3em;">
     <tr>
@@ -64,7 +66,7 @@ defined('_JEXEC') or die('Restricted Access');
     </div>
 </form>
 <script>
-  window.print();
+  /*window.print();*/
 </script>
 </body>
 </html>
