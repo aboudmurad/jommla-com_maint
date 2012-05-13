@@ -59,10 +59,10 @@ table.adminlist tr td{
     width: 16px;
 }
 
-table.adminlist tbody tr td.yellow,.yellow {
+table.adminlist tbody tr.row1 > td.yellow, table.adminlist tbody tr td.yellow,.yellow {
     background-color: #fbcb09 ;
 }
 
-table.adminlist tbody tr td.green,.green {
+table.adminlist tbody tr.row1 td.green, table.adminlist tbody tr td.green,.green {
     background-color: #c6d880 ;
 }
