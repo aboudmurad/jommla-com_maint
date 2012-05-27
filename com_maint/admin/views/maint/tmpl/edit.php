@@ -18,8 +18,7 @@ echo
             <?php foreach ($this->form->getFieldset() as $field): ?>
             <?php if (false==$this->canDeliver && 
                             ($field->name=='jform[delivered_at]'
-                                || $field->name=='jform[paied_money]'
-                                || $field->name=='jform[left_money]')) continue;?>
+                                || $field->name=='jform[paied_money]')) continue;?>
                 <li><?php echo JText::_($field->label);
             echo $field->input; ?></li>
 <?php endforeach; ?>
