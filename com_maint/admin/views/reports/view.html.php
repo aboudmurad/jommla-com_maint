@@ -53,16 +53,16 @@ class MaintViewReports extends JView {
      * @return void
      */
     protected function setDocument() {
-        $doc = JFactory::getDocument();
-        $doc->setTitle(JText::_('COM_MAINT'));
+        $document = JFactory::getDocument();
+        $document->setTitle(JText::_('COM_MAINT'));
         
         JToolBarHelper::back('JTOOLBAR_BACK', 'index.php?option=com_maint');
-        $doc->addStyleSheet(JURI::base(true)  . '/components/com_maint/assets/css/admin.css');
-        $doc->addStyleSheet(JURI::base(true)  . '/components/com_maint/assets/css/datepicker/datepicker_dashboard/datepicker_dashboard.css');
-        $doc->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Locale.ar-AA.DatePicker.js');
-        $doc->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Picker.js');
-        $doc->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Picker.Attach.js');
-        $doc->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Picker.Date.js');
+        $document->addStyleSheet(JURI::base(true)  . '/components/com_maint/assets/css/admin.css');
+        $document->addStyleSheet(JURI::base(true)  . '/components/com_maint/assets/css/datepicker/datepicker_dashboard/datepicker_dashboard.css');
+        $document->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Locale.ar-AA.DatePicker.js');
+        $document->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Picker.js');
+        $document->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Picker.Attach.js');
+        $document->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Picker.Date.js');
         $document->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker_loader.js');
     }
 

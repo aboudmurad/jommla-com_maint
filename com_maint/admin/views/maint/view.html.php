@@ -10,85 +10,85 @@ jimport('joomla.application.component.view');
  */
 class MaintViewMaint extends JView
 {
-	/**
-	 * display method of Hello view
-	 * @return void
-	 */
-	public function display($tpl = null)
-	{
-		// get the Data
-		$form = $this->get('Form');
-		$order = $this->get('Order');
+    /**
+     * display method of Hello view
+     * @return void
+     */
+    public function display($tpl = null)
+    {
+        // get the Data
+        $form = $this->get('Form');
+        $order = $this->get('Order');
 
-		// Check for errors.
-		if (count($errors = $this->get('Errors')))
-		{
-			JError::raiseError(500, implode('<br />', $errors));
-			return false;
-		}
-		// Assign the Data
-		$this->form  = $form;
-		$this->order = $order;
+        // Check for errors.
+        if (count($errors = $this->get('Errors')))
+        {
+            JError::raiseError(500, implode('<br />', $errors));
+            return false;
+        }
+        // Assign the Data
+        $this->form  = $form;
+        $this->order = $order;
 
-		// Set the toolbar
-		$this->addToolBar();
+        // Set the toolbar
+        $this->addToolBar();
 
 
         // Set the document
         $this->setDocument();
 
 
-		// Display the template
-		parent::display($tpl);
-	}
+        // Display the template
+        parent::display($tpl);
+    }
 
-	/**
-	 * Setting the toolbar
-	 */
-	protected function addToolBar()
-	{
-		JRequest::setVar('hidemainmenu', true);
-		$user	 = JFactory::getUser();
-		$userId	 = $user->get('id');
-		if ($this->order)
-		    $canDo   = MaintHelper::getActions($this->order->id);
-		else
-		    $canDo   = MaintHelper::getActions(0);
-		$isNew   = (false == isset($this->order) || $this->order->id == 0);
-		$this->canDeliver = ($this->order && $this->order->id)?   
-		                        $canDo->get('core.deliver') :
-		                        $canDo->get('core.deliver', $this->order->id);
+    /**
+     * Setting the toolbar
+     */
+    protected function addToolBar()
+    {
+        JRequest::setVar('hidemainmenu', true);
+        $user	 = JFactory::getUser();
+        $userId	 = $user->get('id');
+        if ($this->order)
+            $canDo   = MaintHelper::getActions($this->order->id);
+        else
+            $canDo   = MaintHelper::getActions(0);
+        $isNew   = (false == isset($this->order) || $this->order->id == 0);
+        $this->canDeliver = ($this->order && $this->order->id)?
+        $canDo->get('core.deliver') :
+        $canDo->get('core.deliver', $this->order->id);
 
-		JToolBarHelper::title($isNew ? JText::_('COM_MAINT_ADD_APPLICATION')
-		                             : JText::_('COM_MAINT_EDIT_APPLICATION'));
-		
-		if ($isNew)
-		{
-		    // For new records, check the create permission.
-		    if ($canDo->get('core.create'))
-		    {
-		        JToolBarHelper::apply('maint.apply', 'JTOOLBAR_APPLY');
-		        JToolBarHelper::save('maint.save', 'JTOOLBAR_SAVE');
-		        JToolBarHelper::save2new('maint.save2new');
-		    }    
-		} else {
-		    if ($canDo->get('core.edit', $this->order->id)) {
-		        JToolBarHelper::apply('maint.apply', 'JTOOLBAR_APPLY');
-		        JToolBarHelper::save('maint.save', 'JTOOLBAR_SAVE');
-		        
-		        // if we can return to make a new one.
-		        if ($canDo->get('core.create', $this->order->id))
-		        {
-		            JToolBarHelper::save2new('maint.save2new');
-		        }
-		    }
-		    
-		    $bar = JToolBar::getInstance('toolbar');
-		    $bar->addButtonPath(JPATH_COMPONENT.'/button/');
-		    $bar->appendButton('Print', 'COM_MAINT_PRINT', 'index.php?option=com_maint&task=maints.pprint&id='.$this->order->id);
-		}
-		JToolBarHelper::cancel('maint.cancel', 'JTOOLBAR_CANCEL');
-	}
+        JToolBarHelper::title($isNew ? JText::_('COM_MAINT_ADD_APPLICATION')
+                        : JText::_('COM_MAINT_EDIT_APPLICATION'));
+
+        if ($isNew)
+        {
+            // For new records, check the create permission.
+            if ($canDo->get('core.create'))
+            {
+                JToolBarHelper::apply('maint.apply', 'JTOOLBAR_APPLY');
+                JToolBarHelper::save('maint.save', 'JTOOLBAR_SAVE');
+                JToolBarHelper::save2new('maint.save2new');
+            }
+        } else {
+            if ($canDo->get('core.edit', $this->order->id)) {
+                JToolBarHelper::apply('maint.apply', 'JTOOLBAR_APPLY');
+                JToolBarHelper::save('maint.save', 'JTOOLBAR_SAVE');
+
+                // if we can return to make a new one.
+                if ($canDo->get('core.create', $this->order->id))
+                {
+                    JToolBarHelper::save2new('maint.save2new');
+                }
+            }
+
+            $bar = JToolBar::getInstance('toolbar');
+            $bar->addButtonPath(JPATH_COMPONENT.'/button/');
+            $bar->appendButton('Print', 'COM_MAINT_PRINT', 'index.php?option=com_maint&task=maints.pprint&id='.$this->order->id);
+        }
+        JToolBarHelper::cancel('maint.cancel', 'JTOOLBAR_CANCEL');
+    }
 
 
     /**

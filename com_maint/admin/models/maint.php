@@ -357,6 +357,13 @@ class MaintModelMaint extends JModelAdmin {
             $this->order = $db->loadObject();*/
             if (!$this->order)
                 $this->order = $this->getOrder();
+            
+            if ( strtotime($this->order['fixed_at']) <= 0 ) {
+                $this->order['fixed_at'] = NULL;
+            }
+            if ( strtotime($this->order['delivered_at']) <= 0 ) {
+                $this->order['delivered_at'] = NULL;
+            }
             $data = $this->order;
             $data->client_name  = $data->name;
             $data->client_phone = $data->phone;
