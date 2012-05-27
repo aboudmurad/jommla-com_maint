@@ -28,12 +28,12 @@ class JButtonPrint extends JButton
 	public function fetchButton($type='Print', $name = '', $url = '', $width=440, $height=600)
 	{
 	    
-	    
+	    $urlParts = explode('/', $url);
 	    $text   = $name;
 	    $text	= JText::_($text);
-	    $class	 = $this->fetchIconClass($name).'';
+	    $class	 = $this->fetchIconClass($type).'';
 		$onClick = "window.open(this.href, 'popupwindow', 'width=$width,height=$height'); return false;";
-		$html	 = "<a id=".$this->fetchId($type, $name)." onclick=\"$onClick\" href=\"$url\" >
+		$html	 = "<a id=".$this->fetchId($type, $urlParts[count($urlParts)-1])." onclick=\"$onClick\" href=\"$url\" >
 		                <span class=\"$class\">
 		                </span>
 		                $text

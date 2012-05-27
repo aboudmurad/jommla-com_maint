@@ -44,7 +44,7 @@ class MaintViewReports extends JView {
     protected function addToolBar() {
         //$canDo = MessagesHelper::getActions();
 
-        JToolBarHelper::title(' الصيانة');
+        JToolBarHelper::title(JText::_('COM_MAINT'));
     }
 
     /**
@@ -54,38 +54,16 @@ class MaintViewReports extends JView {
      */
     protected function setDocument() {
         $doc = JFactory::getDocument();
-        $doc->setTitle('إدارة ورشة صيانة الحواسيب');
+        $doc->setTitle(JText::_('COM_MAINT'));
         
         JToolBarHelper::back('JTOOLBAR_BACK', 'index.php?option=com_maint');
-        
+        $doc->addStyleSheet(JURI::base(true)  . '/components/com_maint/assets/css/admin.css');
         $doc->addStyleSheet(JURI::base(true)  . '/components/com_maint/assets/css/datepicker/datepicker_dashboard/datepicker_dashboard.css');
         $doc->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Locale.ar-AA.DatePicker.js');
         $doc->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Picker.js');
         $doc->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Picker.Attach.js');
         $doc->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Picker.Date.js');
-        $doc->addScriptDeclaration("
-		window.addEvent('domready', function(){
-			Locale.use('ar-AA');
-			new Picker.Date($$('input[id=jform_filter_start]'), {
-			    timePicker: false,
-			    positionOffset: {x: -10, y: 0},
-			    pickerClass: 'datepicker_dashboard',
-			    useFadeInOut: !Browser.ie ,
-          format: '%Y-%m-%d'
-			});
-		});
-        
-        window.addEvent('domready', function(){
-			Locale.use('ar-AA');
-			new Picker.Date($$('input[id=jform_filter_end]'), {
-			    timePicker: false,
-			    positionOffset: {x: -10, y: 0},
-			    pickerClass: 'datepicker_dashboard',
-			    useFadeInOut: !Browser.ie ,
-          format: '%Y-%m-%d'
-			});
-		});
-		");
+        $document->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker_loader.js');
     }
 
 }

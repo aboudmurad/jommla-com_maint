@@ -69,12 +69,12 @@
             <folder>button</folder>
             
 		</files>
-
-    <languages folder="admin">
-			<!--<language tag="en-GB">language/en-GB/en-GB.com_maint.ini</language>-->
-			<language tag="en-GB">language/en-GB/en-GB.com_maint.sys.ini</language>
-      <language tag="ar-AA">language/ar-AA/ar-AA.com_maint.sys.ini</language>
-		</languages>
+	    <languages folder="admin">
+				<language tag="en-GB">language/en-GB/en-GB.com_maint.ini</language>
+				<language tag="en-GB">language/en-GB/en-GB.com_maint.sys.ini</language>
+	            <language tag="ar-AA">language/ar-AA/ar-AA.com_maint.sys.ini</language>
+	            <language tag="ar-AA">language/ar-AA/ar-AA.com_maint.ini</language>
+	    </languages>
 	</administration>
 
 </extension>

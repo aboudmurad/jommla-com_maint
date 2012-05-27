@@ -55,10 +55,12 @@ class MaintViewMaint extends JView
 		else
 		    $canDo   = MaintHelper::getActions(0);
 		$isNew   = (false == isset($this->order) || $this->order->id == 0);
-		$this->canDeliver = $canDo->get('core.deliver');
+		$this->canDeliver = ($this->order && $this->order->id)?   
+		                        $canDo->get('core.deliver') :
+		                        $canDo->get('core.deliver', $this->order->id);
 
-		JToolBarHelper::title($isNew ? 'جديد'
-		                             : 'تغيير');
+		JToolBarHelper::title($isNew ? JText::_('COM_MAINT_ADD_APPLICATION')
+		                             : JText::_('COM_MAINT_EDIT_APPLICATION'));
 		
 		if ($isNew)
 		{
@@ -68,14 +70,14 @@ class MaintViewMaint extends JView
 		        JToolBarHelper::apply('maint.apply', 'JTOOLBAR_APPLY');
 		        JToolBarHelper::save('maint.save', 'JTOOLBAR_SAVE');
 		        JToolBarHelper::save2new('maint.save2new');
-		    }
+		    }    
 		} else {
-		    if ($canDo->get("core.edit")) {
+		    if ($canDo->get('core.edit', $this->order->id)) {
 		        JToolBarHelper::apply('maint.apply', 'JTOOLBAR_APPLY');
 		        JToolBarHelper::save('maint.save', 'JTOOLBAR_SAVE');
 		        
 		        // if we can return to make a new one.
-		        if ($canDo->get('core.create'))
+		        if ($canDo->get('core.create', $this->order->id))
 		        {
 		            JToolBarHelper::save2new('maint.save2new');
 		        }
@@ -83,7 +85,7 @@ class MaintViewMaint extends JView
 		    
 		    $bar = JToolBar::getInstance('toolbar');
 		    $bar->addButtonPath(JPATH_COMPONENT.'/button/');
-		    $bar->appendButton('Print', 'Print', 'index.php?option=com_maint&task=maints.pprint&id='.$this->order->id);
+		    $bar->appendButton('Print', 'COM_MAINT_PRINT', 'index.php?option=com_maint&task=maints.pprint&id='.$this->order->id);
 		}
 		JToolBarHelper::cancel('maint.cancel', 'JTOOLBAR_CANCEL');
 	}

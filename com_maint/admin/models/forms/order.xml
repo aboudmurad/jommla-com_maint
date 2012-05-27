@@ -6,78 +6,79 @@
     
         <field name="client_id"	type="hidden" value="0"	/>
     <field name="client_name" type="text" size="40"	class="inputbox" default=""  required="true"
-			label="إسم العميل"
-      description="إسم العميل صاحب الجهاز"	/>
+			label="COM_MAINT_CUSTOMER_NAME"
+      description="COM_MAINT_CUSTOMER_NAME_DESC"	/>
 
     <field name="client_phone" type="text" size="40"	class="inputbox" default=""  validate="integer"
-			label="الهاتف"
-      description="هاتف العميل للاتصال به في حالة دعت الحاجه الي ذلك"	/>
+			label="COM_MAINT_CUSTOMER_PHONE"
+      description="COM_MAINT_CUSTOMER_PHONE_DESC"	/>
       
     <field name="client_mobile" type="text" size="40"	class="inputbox" default=""  validate="integer"   required="true"
-			label="خلوي"
-      description="هاتف العميل للاتصال به في حالة دعت الحاجه الي ذلك"	/>
+			label="COM_MAINT_CUSTOMER_CELL"
+      description="COM_MAINT_CUSTOMER_CELL_DESC"	/>
 
     <field name="client_email" type="text" size="40"	class="inputbox" default=""  validate="email"
-			label="البريد الإلكتروني"
-      description="البريد الالكتروني للعميل كوسيلة للاتصال به"	/>
+			label="COM_MAINT_CUSTOMER_EMAIL"
+      description="COM_MAINT_CUSTOMER_EMAIL_DESC"	/>
       
     <field type="spacer" name="myspacer" hr="true" />
-      
-      
-		<field name="id"	type="hidden"	/>
+    <field name="id"	type="hidden"	/>
+    
 		<field name="device_type" type="inputbox" size="40"	class="inputbox" default=""  required="true"
-			label="نوع الجهاز"
-      description="نوع الجهاز المطلوب صيانته"	/>
+			label="COM_MAINT_DEVICE_TYPE"
+      description="COM_MAINT_DEVICE_TYPE_DESC"	/>
 
     <field name="device_desc" type="textarea"	class="inputbox" default=""  required="true"
-			label="وصف الجهاز"
-      description="وصف الجهاز"	/>
+			label="COM_MAINT_DEVICE_DESC"
+      description="COM_MAINT_DEVICE_DESC_DESC"	/>
       
     <field name="device_accessories" type="textarea"	class="inputbox" required="true" default="لايوجد" 
-			label="ملحقات الجهاز"
-      description="ملحقات الجهاز"	/>
+			label="COM_MAINT_DEVICE_ACC"
+      description="COM_MAINT_DEVICE_ACC_DESC"	/>
 
     <field name="work_required" type="textarea"	class="inputbox" default=""  required="true"
-			label="المطلوب او المشكلة"
-      description="وصف للمشكلة او المطلوب عمله"	/>
+			label="COM_MAINT_DEVICE_JOB"
+      description="COM_MAINT_DEVICE_JOB_DESC"	/>
 
     <field name="work_done" type="textarea"	class="inputbox" default=""
-			label="العمل"
-      description="العمل اللذي تم عمله لإصلاح العطل"	/>
+			label="COM_MAINT_DEVICE_WORK"
+      description="COM_MAINT_DEVICE_WORK_DESC"	/>
 
 
     <field name="extra_parts_notes" type="textarea"	class="inputbox" default=""
-			label="ملاحظات/ تركيبات"
-      description="ملاحظات/ تركيبات"	/>
+			label="COM_MAINT_CUSTOMER_NOTES"
+      description="COM_MAINT_CUSTOMER_NOTES_DESC"	/>
 
-    <field name="extra_parts_notes_paied" type="list" label="تم دفع : ملاحظات/ تركيبات" description="تم دفع : ملاحظات/ تركيبات">
-    	<option value="0">لا</option>
-  		<option value="1">نعم</option>
+    <field name="extra_parts_notes_paied" type="list" 
+        label="COM_MAINT_CUSTOMER_NOTES_PAIED" 
+        description="COM_MAINT_CUSTOMER_NOTES_PAIED_DESC">
+    	<option value="0">COM_MAINT_YES</option>
+  		<option value="1">COM_MAINT_NO</option>
     </field>
 
     <field name="total_money" type="text" size="5"	default="" validate="integer"
-			label="المبلغ الكلّي"
-      description="التكلفة الكلية"	/>
+			label="COM_MAINT_MONEY_TOTAL"
+      description="COM_MAINT_MONEY_TOTAL_DESC"	/>
 
     <field name="discount_money" type="text" size="5"	default="0" validate="calc"
-			label="مبلغ الخصم"
-      description="المبلغ المٌخفّض"	/>
+			label="COM_MAINT_MONEY_DISCOUNT"
+      description="COM_MAINT_MONEY_DISCOUNT_DESC"	/>
 
     <field name="paied_money" type="text" size="5"	default="0" validate="calc"
-			label="المبلغ المدفٌوع"
-      description="المبلغ اللذي قام العميل بدفعه"	/>
+			label="COM_MAINT_MONEY_PAIED"
+      description="COM_MAINT_MONEY_PAIED_DESC"	/>
 
     <field name="entered_at" type="EhCalendar" time="true" locale="ar-AA" required="true" addDefault="true"
-			label="تاريخ الدخول "
-      description="تاريخ استلام الجهاز من العميل"	/>
+			label="COM_MAINT_DATE_ENTERED"
+      description="COM_MAINT_DATE_ENTERED_DESC"	/>
 
     <field name="fixed_at" type="EhCalendar" time="true" locale="ar-AA" validate="datum"
-			label="تاريخ الإصلاح "
-      description="تاريخ اصلاح العٌطل"	/>
+			label="COM_MAINT_DATE_FIXED"
+      description="COM_MAINT_DATE_FIXED_DESC"	/>
 
     <field name="delivered_at" type="EhCalendar" time="true" locale="ar-AA" validate="datum"
-			label="تاريخ الخروج"
-      description="تاريخ استلام العميل للجهاز مرة اخري"	/>
+			label="COM_MAINT_DATE_EXIT"
+      description="COM_MAINT_DATE_EXIT_DESC"	/>
 
 </fieldset>
 </form>

@@ -6,44 +6,39 @@ JHtml::_('behavior.tooltip');
 ?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_maint'); ?>" method="post" name="adminForm" id="adminForm">
-    <fieldset id="filter-bar">
+    <!-- <fieldset id="filter-bar">
         <div class="filter-search fltlft">
             <select name="filter_workerId" id="jform_filter_workerId" class="inputbox" onchange="this.form.submit()">
                 <option value="">- العاملون -</option>
                 <?php echo JHtml::_('select.options', $this->state->get('WorkerList'), 'value', 'text', $this->state->get('filter.workerId'));?>
             </select>
         </div>
-    </fieldset>
+    </fieldset> -->
     <div class="clr"> </div>
 
     <table class="adminlist">
         <thead>
             <tr>
                 <th width="6">
-                    الرقم
+                    <?php echo JText::_('COM_MAINT_ID')?>
                 </th>
                 <th width="20">
                 </th>
             
                 <th>
-                    إسم الخازن
-                    
+                    <?php echo JText::_('COM_MAINT_MONEY_EMPOLYEE')?>
                 </th>
                 <th>
-                    إسم المٌستلم
-                    
+                    <?php echo JText::_('COM_MAINT_MONEY_EMPOLYER')?>
                 </th>
                 <th width="150">
-                    من
-                    
+                    <?php echo JText::_('COM_MAINT_FROM')?>
                 </th>
                 <th width="150">
-                    إلي
-                    
+                    <?php echo JText::_('COM_MAINT_TO')?>
                 </th>
                 <th width="50">
-                    الكمية
-                    
+                    <?php echo JText::_('COM_MAINT_MONEY_AMOUNT')?>
                 </th>
             </tr>
         </thead>

@@ -17,8 +17,6 @@ class maintViewShow extends JView {
         $this->order = $this->get('Order');
         $this->state = $this->get('State');
         
-        $this->setLayout('popup');
-        
         // Display the template
         parent::display($tpl);
 
@@ -35,14 +33,14 @@ class maintViewShow extends JView {
     protected function setDocument() {
         $canDo = MaintHelper::getActions();
         $document = JFactory::getDocument();
-        $document->setTitle('إدارة ورشة صيانة الحواسيب');
-        JToolBarHelper::title(' الصيانة');
+        $document->setTitle(JText::_('COM_MAINT'));
+        JToolBarHelper::title(JText::_('COM_MAINT'));
         $document->addStyleSheet(JURI::base(true)  . '/components/com_maint/assets/css/admin.css');
         JToolBarHelper::back('JTOOLBAR_BACK', 'index.php?option=com_maint');
         
         $bar = JToolBar::getInstance('toolbar');
         $bar->addButtonPath(JPATH_COMPONENT.'/button/');
-        $bar->appendButton('Print', 'Print', 'index.php?option=com_maint&task=maints.pprint&id='.$this->id);
+        $bar->appendButton('Print', 'COM_MAINT_PRINT', 'index.php?option=com_maint&task=maints.pprint&id='.$this->id);
         
         if ($canDo->get('core.edit')) {
             JToolBarHelper::editList('maint.edit');

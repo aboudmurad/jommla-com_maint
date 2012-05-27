@@ -13,6 +13,8 @@ class MaintViewMaints extends JView {
 
     // Overwriting JView display method
     function display($tpl = null) {
+        
+        
         $this->pagination = $this->get('Pagination');
         $this->state = $this->get('State');
 
@@ -41,13 +43,13 @@ class MaintViewMaints extends JView {
         $canDo = MaintHelper::getActions();
         $bar = JToolBar::getInstance('toolbar');
 
-        JToolBarHelper::title(' الصيانة');
+        JToolBarHelper::title(JText::_('COM_MAINT'));
         
         $toolbar = JToolBar::getInstance('toolbar');
         
-        JToolBarHelper::custom('maints.reports', 'icon-32-xml.png', '', 'التقارير', false, false);
+        JToolBarHelper::custom('maints.reports', 'icon-32-xml.png', '', 'COM_MAINT_MENU_REPORTS', false, false);
         
-        JToolBarHelper::customX('maints.show', 'preview', '', 'عرض');
+        JToolBarHelper::customX('maints.show', 'preview', '', 'COM_MAINT_MENU_PREVIEW');
         
         if ($canDo->get('core.delete')) {
             JToolBarHelper::deleteListX('', 'maints.delete');
@@ -64,7 +66,7 @@ class MaintViewMaints extends JView {
         if ($canDo->get('core.admin'))
         {
             JToolBarHelper::divider();
-            JToolBarHelper::custom('maints.money', 'money.png', '', 'التوريد', false, false);
+            JToolBarHelper::custom('maints.money', 'money.png', '', 'COM_MAINT_MONEY', false, false);
             JToolBarHelper::preferences('com_maint');
         }
     }
@@ -76,36 +78,14 @@ class MaintViewMaints extends JView {
      */
     protected function setDocument() {
         $document = JFactory::getDocument();
-        $document->setTitle('إدارة ورشة صيانة الحواسيب');
+        $document->setTitle(JText::_('COM_MAINT'));
         $document->addStyleSheet(JURI::base(true)  . '/components/com_maint/assets/css/admin.css');
         $document->addStyleSheet(JURI::base(true)  . '/components/com_maint/assets/css/datepicker/datepicker_dashboard/datepicker_dashboard.css');
         $document->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Locale.ar-AA.DatePicker.js');
         $document->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Picker.js');
         $document->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Picker.Attach.js');
         $document->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker/Picker.Date.js');
-        $document->addScriptDeclaration("
-		window.addEvent('domready', function(){
-			Locale.use('ar-AA');
-			new Picker.Date($$('input[id=jform_filter_start]'), {
-			    timePicker: false,
-			    positionOffset: {x: -10, y: 0},
-			    pickerClass: 'datepicker_dashboard',
-			    useFadeInOut: !Browser.ie ,
-          format: '%Y-%m-%d'
-			});
-		});
-
-        window.addEvent('domready', function(){
-			Locale.use('ar-AA');
-			new Picker.Date($$('input[id=jform_filter_end]'), {
-			    timePicker: false,
-			    positionOffset: {x: -10, y: 0},
-			    pickerClass: 'datepicker_dashboard',
-			    useFadeInOut: !Browser.ie ,
-          format: '%Y-%m-%d'
-			});
-		});
-		");
+        $document->addScript(JURI::base(true) . '/components/com_maint/assets/js/datepicker_loader.js');
     }
 
 }

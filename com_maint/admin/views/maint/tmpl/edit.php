@@ -11,13 +11,13 @@ echo
       method="post" name="adminForm" id="maint-form">
     <fieldset class="adminform">
         <?php if ($this->order && $this->order->id): ?>
-            <legend> تغيير طلب صيانة </legend><?php else: ?>
-            <legend> إضافة طلب صيانة </legend>
+            <legend> <?php echo JText::_('COM_MAINT_EDIT_APPLICATION'); ?> </legend><?php else: ?>
+            <legend> <?php echo JText::_('COM_MAINT_ADD_APPLICATION'); ?> </legend>
             <?php endif ?>
         <ul class="adminformlist">
             <?php foreach ($this->form->getFieldset() as $field): ?>
             <?php if (false==$this->canDeliver && $field->name=='jform[delivered_at]') continue;?>
-                <li><?php echo $field->label;
+                <li><?php echo JText::_($field->label);
             echo $field->input; ?></li>
 <?php endforeach; ?>
         </ul>

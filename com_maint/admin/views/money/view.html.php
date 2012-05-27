@@ -30,9 +30,9 @@ class MaintViewMoney extends JView {
      * Setting the toolbar
      */
     protected function addToolBar() {
-        JToolBarHelper::title(' الصيانة');
+        JToolBarHelper::title(JText::_('COM_MAINT'));
         JToolBarHelper::back('JTOOLBAR_BACK', 'index.php?option=com_maint');
-        JToolBarHelper::customX('maints.moneySW', 'alf', '', 'تبديل حالة الدفع');
+        JToolBarHelper::customX('maints.moneySW', 'alf', '', 'COM_MAINT_SW_STATE');
     }
 
     /**
@@ -42,7 +42,7 @@ class MaintViewMoney extends JView {
      */
     protected function setDocument() {
         $document = JFactory::getDocument();
-        $document->setTitle('إدارة ورشة صيانة الحواسيب');
+        $document->setTitle(JText::_('COM_MAINT'));
         $document->addStyleSheet(JURI::base(true)  . '/components/com_maint/assets/css/admin.css');
     }
 }
