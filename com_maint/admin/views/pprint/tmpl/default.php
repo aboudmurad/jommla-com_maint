@@ -11,14 +11,20 @@ defined('_JEXEC') or die('Restricted Access');
 <title>ShafiPc</title>
 <style>
 body {
-font-family: Tahoma;
+	font-family: Arial;
+	font-weight: bolder;
 	padding: 0;
 	margin: 0;
 	direction: rtl;
 	text-align: right;
-	/*width: 230mm;*/
+	width: 105mm;
 	height: 148mm;
 }
+
+.title {
+    width:130px;
+}
+
 .border-small {
 	padding: 1px;
 	height: 1.5em;
@@ -26,148 +32,159 @@ font-family: Tahoma;
 }
 
 .border {
-	padding: 1px;
+	padding: 3px;
 	height: 4.8em;
 	border: 0px solid #F1F1F1;
 }
 
-.box {
-	width: 90mm;
-	border: 1px solid;
-	height: 143mm;
-	padding: 1.0em;
+.box { 
+	border: 0px solid;
+	padding: 3px;
 	margin: 0mm;
-	float: left;
 }
 
-#receit {
-    height: 97mm;
-    padding-top: 50mm;
-    padding-right: 1.2em;
-    background: url('components/com_maint/assets/images/receit.jpg');
+.even td {
+    background: #E4E4E4;
 }
 
-#internal {
-    margin-top: 1em;
-	height: 149mm;
-	padding: 0.3em;
-	width: 100mm;
-	margin-left: 3px;
-}
 </style>
+<script type="text/javascript">
+function altRows(id){
+	if(document.getElementsByTagName){  
+		
+		var table = document.getElementById(id);  
+		var rows = table.getElementsByTagName("tr"); 
+		 
+		for(i = 0; i < rows.length; i++){          
+			if(i % 2 == 0){
+				rows[i].className = "even";
+			}else{
+				rows[i].className = "odd";
+			}      
+		}
+	}
+}
+
+window.onload=function(){
+	altRows('altrows');
+}
+</script>
+
 </head>
 <body>
-
-	<form action="<?php echo JRoute::_('index.php?option=com_maint'); ?>"
-		method="post" name="adminForm" id="adminForm">
-		<div class="box" id="receit">
-			<br> <br> <br>
-			<div>
-				<table class="displayOrder" style="font-size: 1.3em;">
-					<tr>
-						<td class="title"><?php echo JText::_('COM_MAINT_ID');?> :</td>
-						<td><?php echo $this->order->id?></td>
-					</tr>
-					<tr>
-						<td class="title"><?php echo JText::_('COM_MAINT_CUSTOMER_NAME');?>:
-						</td>
-						<td><?php echo $this->order->name ?></td>
-					</tr>
-					<tr>
-						<td class="title"><?php echo JText::_('COM_MAINT_DATE_ENTERED');?>
-							:</td>
-						<td><?php echo $this->order->entered_at ?></td>
-					</tr>
-				</table>
-			</div>
-		</div>
-
-
-
-		<div class="box" id="internal">
-			<div style='text-align: center'>
-				<?php echo JText::_('COM_MAINT_PPRINT_INTERNAL');?>
-			</div>
-			<div style="clear: both; height: 18mm; margin-bottom: 15 mm;">
-				<div>
-					<img
-						src="<?php echo JURI::base()?>/components/com_maint/assets/images/logo.png" />
-				</div>
-			</div>
-			<div>
-				<table style="font-size: 1.0em;">
-					<tr>
-						<td class="title"><?php echo JText::_('COM_MAINT_ID');?> :</td>
-						<td><?php echo $this->order->id?></td>
-					</tr>
-					<tr>
-						<td class="title"><?php echo JText::_('COM_MAINT_CUSTOMER_NAME');?>:
-						</td>
-						<td><?php echo $this->order->name ?></td>
-					</tr>
-					<tr>
-						<td class="title"><?php echo JText::_('COM_MAINT_CUSTOMER_PHONE')?>
-						</td>
-						<td><?php echo $this->order->phone ?>
-						</td>
-					</tr>
-					<tr>
-						<td class="title"><?php echo JText::_('COM_MAINT_CUSTOMER_CELL')?>
-						</td>
-						<td><?php echo $this->order->mobile ?>
-						</td>
-					</tr>
-					<tr>
-						<td class="title"><?php echo JText::_('COM_MAINT_DATE_ENTERED');?>
-							:</td>
-						<td><?php echo $this->order->entered_at ?></td>
-					</tr>
-					<tr>
-						<td class="title"><?php echo JText::_('COM_MAINT_MONEY_TOTAL')?></td>
-						<td class="border-small"></td>
-					</tr>
-					<tr>
-						<td class="title"><?php echo JText::_('COM_MAINT_DATE_FIXED');?> :</td>
-						<td class="border-small"></td>
-					</tr>
-
-					<tr>
-						<td class="title"><?php echo JText::_('COM_MAINT_EMPLOYEE_FIXER')?>
-						</td>
-						<td class="border-small"><?php echo $this->order->workers_fixer ?></td>
-					</tr>
-					<tr>
-						<td class="title"><?php echo JText::_('COM_MAINT_DEVICE_JOB')?></td>
-						<td class="border"><?php echo $this->order->work_required ?></td>
-					</tr>
-					<tr>
-						<td class="title"><?php echo JText::_('COM_MAINT_DEVICE_WORK')?></td>
-						<td class="border"><?php echo $this->order->work_done ?></td>
-					</tr>
-					<tr>
-						<td class="title"><?php echo JText::_('COM_MAINT_CUSTOMER_NOTES')?>
-						</td>
-						<td class="border"><?php if( $this->order->extra_parts_notes!='لايوجد ') echo $this->order->extra_parts_notes; ?>
-						</td>
-					</tr>
-					<tr>
-						<td class="title"><?php echo JText::_('COM_MAINT_CUSTOMER_NOTES_PAIED')?>
-						</td>
-						<td class="border-small"></td>
-					</tr>
-				</table>
-			</div>
-		</div>
-
-
-
+	<?php if ( isset($_GET['show']) && $_GET['show']=='outrecit' ): ?>
+	<div class="box" id="receit">
 		<div>
-			<input type="hidden" title="Checkbox for row 0" value="1"
-				name="cid[]" id="cb0"> <input type="hidden" name="task" value="" />
-			<input type="hidden" name="boxchecked" value="1" />
-			<?php echo JHtml::_('form.token'); ?>
+			<img
+				src="<?php echo JURI::base()?>/components/com_maint/assets/images/Shafi_top.jpg">
 		</div>
-	</form>
+		<br>
+		<br>
+		<br>
+		<div>
+			<table class="displayOrder" style="font-size: 1.5em;width: 100%">
+				<tr>
+					<td><?php echo JText::_('COM_MAINT_ID');?> </td>
+					<td> :   <?php echo $this->order->id?></td>
+				</tr>
+				<!--<tr>
+					<td class="title"><?php echo JText::_('COM_MAINT_CUSTOMER_NAME');?>:
+					</td>
+					<td>  :   <?php echo $this->order->name ?></td>
+				</tr> -->
+				<tr>
+					<td><?php echo JText::_('COM_MAINT_DATE_ENTERED');?>
+						</td>
+					<td> :    <?php echo $this->order->entered_at ?></td>
+				</tr>
+			</table>
+			<br>
+			<br>
+			<br>
+			<div>
+				<img
+					src="<?php echo JURI::base()?>/components/com_maint/assets/images/Shafi_bottom.jpg">
+			</div>
+		</div>
+	</div>
+	<?php else: ?>
+	<div class="box" id="internal">
+		<div style='text-align: center'>
+			<?php echo JText::_('COM_MAINT_PPRINT_INTERNAL');?>
+		</div>
+		<div style="clear: both; height: 18mm; margin-bottom: 10 mm;">
+			<div>
+				<img
+					src="<?php echo JURI::base()?>/components/com_maint/assets/images/logo.png" />
+			</div>
+		</div>
+		<div>
+			<table style="font-size: 1em;" id="altrows">
+				<tr>
+					<td class="title"><?php echo JText::_('COM_MAINT_ID');?></td>
+					<td> : <?php echo $this->order->id?></td>
+				</tr>
+				<tr>
+					<td class="title"><?php echo JText::_('COM_MAINT_CUSTOMER_NAME');?>
+					</td>
+					<td> : <?php echo $this->order->name ?></td>
+				</tr>
+				
+				<?php if($this->order->phone): ?>
+				<tr>
+					<td class="title"><?php echo JText::_('COM_MAINT_CUSTOMER_PHONE')?>
+					</td>
+					<td> : <?php echo $this->order->phone ?>
+					</td>
+				</tr>
+				<?php endif;?>
+				
+				<?php if($this->order->mobile):?>
+				<tr>
+					<td class="title"><?php echo JText::_('COM_MAINT_CUSTOMER_CELL')?>
+					</td>
+					<td> : <?php echo $this->order->mobile ?>
+					</td>
+				</tr>
+				<?php endif;?>
+				
+				<tr>
+					<td class="title"><?php echo JText::_('COM_MAINT_DATE_ENTERED');?></td>
+					<td> : <?php echo $this->order->entered_at ?></td>
+				</tr>
+				<tr>
+					<td class="title"><?php echo JText::_('COM_MAINT_MONEY_TOTAL')?></td>
+					<td class="border-small"> : </td>
+				</tr>
+				<tr>
+					<td class="title"><?php echo JText::_('COM_MAINT_DATE_FIXED');?></td>
+					<td class="border-small"> : </td>
+				</tr>
+
+				<tr>
+					<td class="title"><?php echo JText::_('COM_MAINT_EMPLOYEE_FIXER')?>
+					</td>
+					<td class="border-small"> : <?php echo $this->order->workers_fixer ?>
+					</td>
+				</tr>
+				<tr>
+					<td class="title"><?php echo JText::_('COM_MAINT_DEVICE_JOB')?></td>
+					<td class="border"> : <?php echo $this->order->work_required ?></td>
+				</tr>
+				<tr>
+					<td class="title"><?php echo JText::_('COM_MAINT_DEVICE_WORK')?></td>
+					<td class="border"> : <?php echo $this->order->work_done ?></td>
+				</tr>
+				<tr>
+					<td class="title"><?php echo JText::_('COM_MAINT_CUSTOMER_NOTES')?>
+					</td>
+					<td class="border"> : <?php if( $this->order->extra_parts_notes!='لايوجد ') echo $this->order->extra_parts_notes; ?>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<?php endif;?>
 	<script>
   window.print();
 </script>

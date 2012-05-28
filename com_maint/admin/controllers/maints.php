@@ -18,7 +18,10 @@ class MaintControllerMaints extends JControllerAdmin
     
     public function pprint() {
         $id = JRequest::getInt('id');
-        $this->setRedirect(JRoute::_('index.php?option='.$this->option.'&view=pprint&id='.$id, false));
+        if ($show=JRequest::getString('show'))
+            $this->setRedirect(JRoute::_('index.php?option='.$this->option.'&view=pprint&id='.$id.'&show='.$show, false));
+        else
+            $this->setRedirect(JRoute::_('index.php?option='.$this->option.'&view=pprint&id='.$id, false));
     }
     
     public function reports() {
