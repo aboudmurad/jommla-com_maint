@@ -5,13 +5,13 @@ defined('_JEXEC') or die('Restricted Access');
 <?php foreach ($this->items as $i => $item): //var_dump($item); ?>
     <tr class="row<?php echo $i % 2; ?>">
         <td>
-            <?php echo $item->id; ?>
+            <a href="<?php echo JURI::current()?>?option=com_maint&task=maint.edit&id=<?php echo $item->id ?>"><?php echo $item->id; ?></a>
         </td>
         <td>
             <input onclick="isChecked(this.checked);" type="radio" id="cb<?php echo $i ?>" name="cid[]" value="<?php echo $item->id ?>" title="Checkbox for row <?php echo $i ?>">
         </td>
         <td>
-            <?php echo $item->name; ?>
+            <a href="<?php echo JURI::current()?>?option=com_maint&task=maint.edit&id=<?php echo $item->id ?>"><?php echo $item->name; ?></a>
         </td>
         <td>
             <?php echo $item->phone; ?>
