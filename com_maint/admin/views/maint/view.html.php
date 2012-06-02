@@ -48,16 +48,11 @@ class MaintViewMaint extends JView
     protected function addToolBar()
     {
         JRequest::setVar('hidemainmenu', true);
-        $user	 = JFactory::getUser();
-        $userId	 = $user->get('id');
-        if ($this->order)
-            $canDo   = MaintHelper::getActions($this->order->id);
-        else
-            $canDo   = MaintHelper::getActions(0);
-        $isNew   = (false == isset($this->order) || $this->order->id == 0);
-        $this->canDeliver = ($this->order && $this->order->id)?
-        $canDo->get('core.deliver') :
-        $canDo->get('core.deliver', $this->order->id);
+        $user	  = JFactory::getUser();
+        $userId	= $user->get('id');
+        $canDo  = MaintHelper::getActions();
+        $isNew  = (false == isset($this->order) || $this->order->id == 0);
+        $this->canDeliver = $canDo->get('core.deliver');
 
         JToolBarHelper::title($isNew ? JText::_('COM_MAINT_ADD_APPLICATION')
                         : JText::_('COM_MAINT_EDIT_APPLICATION'));
@@ -72,12 +67,12 @@ class MaintViewMaint extends JView
                 JToolBarHelper::save2new('maint.save2new');
             }
         } else {
-            if ($canDo->get('core.edit', $this->order->id)) {
+            if ($canDo->get('core.edit')) {
                 JToolBarHelper::apply('maint.apply', 'JTOOLBAR_APPLY');
                 JToolBarHelper::save('maint.save', 'JTOOLBAR_SAVE');
 
                 // if we can return to make a new one.
-                if ($canDo->get('core.create', $this->order->id))
+                if ($canDo->get('core.create'))
                 {
                     JToolBarHelper::save2new('maint.save2new');
                 }
