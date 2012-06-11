@@ -1,3 +1,9 @@
-This's Where I'll but my joomla stuff,
-If you're interested in theses stuff try it (on your lo machine)
-Have a nice time.
+This extension is simple maintainance workshop management system
+Licence: LGPL v3
+    Features:
+        - CRUD maintainance orders
+
+    TODO:
+        - Add English translations
+        - Some look and feel
+        - Add module and component in one installation package
